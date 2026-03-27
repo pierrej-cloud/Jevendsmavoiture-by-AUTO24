@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  APPOINTMENT_BOOKED
+  INSPECTED
+  OFFER_MADE
+  PURCHASED
+  LOST
+  REJECTED
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
+  HYBRID
+  ELECTRIC
+  LPG
+  OTHER
+}
+
+enum TransmissionType {
+  MANUAL
+  AUTOMATIC
+}
+
+enum ConditionRating {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  notes     LeadNote[]
+}
+
+model Lead {
+  id        String     @id @default(cuid())
+  status    LeadStatus @default(NEW)
+
+  // Contact info
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  whatsapp    String?
+
+  // Consent
+  consentContact Boolean @default(false)
+  consentPrivacy Boolean @default(false)
+
+  // Estimation
+  estimateMin   Float?
+  estimateMax   Float?
+
+  // Relations
+  vehicle       Vehicle?
+  appointment   Appointment?
+  notes         LeadNote[]
+  statusHistory LeadStatusHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vehicle {
+  id       String @id @default(cuid())
+  leadId   String @unique
+  lead     Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  brand          String
+  model          String
+  version        String?
+  year           Int
+  mileage        Int
+  fuelType       FuelType
+  transmission   TransmissionType
+  engineSize     String?
+  color          String?
+  registrationNo String?
+  country        String
+  city           String
+
+  // Condition
+  condition      VehicleCondition?
+  photos         VehiclePhoto[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VehicleCondition {
+  id        String @id @default(cuid())
+  vehicleId String @unique
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  generalCondition  ConditionRating
+  accidentHistory   Boolean @default(false)
+  bodyCondition     ConditionRating
+  interiorCondition ConditionRating
+  mechanicalIssues  Boolean @default(false)
+  maintenanceUpToDate Boolean @default(true)
+  isDrivable        Boolean @default(true)
+  previousOwners    Int     @default(1)
+  comments          String?
+
+  createdAt DateTime @default(now())
+}
+
+model VehiclePhoto {
+  id        String @id @default(cuid())
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  category  String   // front, rear, side, interior, dashboard, damage
+  url       String
+  filename  String
+  size      Int
+
+  // Future AI fields
+  aiVerified    Boolean?
+  aiScore       Float?
+  aiNotes       String?
+
+  createdAt DateTime @default(now())
+}
+
+model Showroom {
+  id           String @id @default(cuid())
+  name         String
+  city         String
+  address      String
+  country      String
+  phone        String?
+  email        String?
+  openingHours String
+  isActive     Boolean @default(true)
+  latitude     Float?
+  longitude    Float?
+
+  appointments Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id         String @id @default(cuid())
+  leadId     String @unique
+  lead       Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  showroomId String
+  showroom   Showroom @relation(fields: [showroomId], references: [id])
+
+  date       DateTime
+  timeSlot   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LeadNote {
+  id      String @id @default(cuid())
+  leadId  String
+  lead    Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  adminId String
+  admin   Admin  @relation(fields: [adminId], references: [id])
+
+  content String
+
+  createdAt DateTime @default(now())
+}
+
+model LeadStatusHistory {
+  id       String     @id @default(cuid())
+  leadId   String
+  lead     Lead       @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  fromStatus LeadStatus?
+  toStatus   LeadStatus
+  changedBy  String?
+
+  createdAt DateTime @default(now())
+}

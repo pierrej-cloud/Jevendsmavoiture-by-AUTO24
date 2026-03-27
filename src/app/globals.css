@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Gilroy font - using Inter as fallback since Gilroy requires licensing */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  body {
+    @apply bg-background text-neutral-dark antialiased;
+  }
+
+  h1 {
+    @apply text-3xl font-extrabold tracking-tight;
+  }
+  h2 {
+    @apply text-2xl font-bold tracking-tight;
+  }
+  h3 {
+    @apply text-xl font-bold;
+  }
+}
+
+@layer components {
+  .funnel-title {
+    @apply text-2xl font-bold text-neutral-dark mb-1;
+  }
+  .funnel-subtitle {
+    @apply text-sm text-neutral-medium mb-6;
+  }
+  .form-field {
+    @apply space-y-1.5;
+  }
+  .form-error {
+    @apply text-xs text-error mt-1;
+  }
+}
