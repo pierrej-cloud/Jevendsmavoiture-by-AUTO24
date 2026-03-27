@@ -1,34 +1,23 @@
-import { Car, Camera, TrendingUp, Calendar } from "lucide-react";
+"use client";
 
-const steps = [
-  {
-    icon: Car,
-    title: "Tell us about your car",
-    description: "Provide your vehicle details and condition",
-  },
-  {
-    icon: Camera,
-    title: "Upload photos",
-    description: "Add photos of your vehicle for a better estimate",
-  },
-  {
-    icon: TrendingUp,
-    title: "Get an estimated range",
-    description: "Receive an indicative price range instantly",
-  },
-  {
-    icon: Calendar,
-    title: "Book your inspection",
-    description: "Choose a showroom and schedule your visit",
-  },
-];
+import { Car, Camera, TrendingUp, Calendar } from "lucide-react";
+import { useLanguage } from "@/i18n/language-context";
 
 export function HowItWorks() {
+  const { t } = useLanguage();
+
+  const steps = [
+    { icon: Car, title: t.landing.howItWorks.step1, description: t.landing.howItWorks.step1Desc },
+    { icon: Camera, title: t.landing.howItWorks.step2, description: t.landing.howItWorks.step2Desc },
+    { icon: TrendingUp, title: t.landing.howItWorks.step3, description: t.landing.howItWorks.step3Desc },
+    { icon: Calendar, title: t.landing.howItWorks.step4, description: t.landing.howItWorks.step4Desc },
+  ];
+
   return (
     <section id="how-it-works" className="py-12 bg-white">
       <div className="max-w-lg mx-auto px-4">
         <h2 className="text-2xl font-bold text-center text-neutral-dark mb-8">
-          How it works
+          {t.landing.howItWorks.title}
         </h2>
         <div className="space-y-6">
           {steps.map((step, i) => (
@@ -39,7 +28,7 @@ export function HowItWorks() {
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                    Step {i + 1}
+                    {t.common.step} {i + 1}
                   </span>
                 </div>
                 <h3 className="font-semibold text-neutral-dark">{step.title}</h3>

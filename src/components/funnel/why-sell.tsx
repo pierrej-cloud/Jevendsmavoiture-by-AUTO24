@@ -1,18 +1,23 @@
-import { Search, Users, Eye, Rocket } from "lucide-react";
+"use client";
 
-const reasons = [
-  { icon: Search, title: "Professional inspection", description: "Thorough multi-point vehicle assessment" },
-  { icon: Users, title: "Trusted automotive experts", description: "Experienced team across Africa" },
-  { icon: Eye, title: "Transparent process", description: "Clear steps from estimate to final offer" },
-  { icon: Rocket, title: "Fast follow-up", description: "Quick response and payment" },
-];
+import { Search, Users, Eye, Rocket } from "lucide-react";
+import { useLanguage } from "@/i18n/language-context";
 
 export function WhySellSection() {
+  const { t } = useLanguage();
+
+  const reasons = [
+    { icon: Search, title: t.landing.whySell.inspection, description: t.landing.whySell.inspectionDesc },
+    { icon: Users, title: t.landing.whySell.experts, description: t.landing.whySell.expertsDesc },
+    { icon: Eye, title: t.landing.whySell.transparent, description: t.landing.whySell.transparentDesc },
+    { icon: Rocket, title: t.landing.whySell.followUp, description: t.landing.whySell.followUpDesc },
+  ];
+
   return (
     <section className="py-12 bg-background">
       <div className="max-w-lg mx-auto px-4">
         <h2 className="text-2xl font-bold text-center text-neutral-dark mb-8">
-          Why sell with AUTO24
+          {t.landing.whySell.title}
         </h2>
         <div className="grid grid-cols-2 gap-4">
           {reasons.map((r, i) => (

@@ -11,6 +11,13 @@ export const fr: TranslationKeys = {
     optional: "Optionnel",
     yes: "Oui",
     no: "Non",
+    step: "Étape",
+    of: "sur",
+    submitting: "Envoi en cours...",
+    confirmAppointment: "Confirmer le rendez-vous",
+    loadingShowrooms: "Chargement des showrooms...",
+    requiredPhotosHint: "Veuillez ajouter toutes les photos requises (avant, arrière, côté, intérieur)",
+    dropPhotoHere: "Déposez votre photo ici",
   },
   landing: {
     heroTitle: "Vendez votre voiture en quelques étapes simples",
@@ -40,9 +47,13 @@ export const fr: TranslationKeys = {
     whySell: {
       title: "Pourquoi vendre avec AUTO24",
       inspection: "Inspection professionnelle",
+      inspectionDesc: "Évaluation complète multi-points du véhicule",
       experts: "Experts automobiles de confiance",
+      expertsDesc: "Équipe expérimentée à travers l'Afrique",
       transparent: "Processus transparent",
+      transparentDesc: "Des étapes claires de l'estimation à l'offre finale",
       followUp: "Suivi rapide",
+      followUpDesc: "Réponse et paiement rapides",
     },
   },
   vehicle: {
@@ -60,6 +71,11 @@ export const fr: TranslationKeys = {
     registrationNo: "Numéro d'immatriculation",
     country: "Pays",
     city: "Ville",
+    selectBrand: "Sélectionner la marque",
+    selectYear: "Année",
+    selectFuelType: "Carburant",
+    selectTransmission: "Transmission",
+    selectCountry: "Pays",
   },
   condition: {
     title: "État du véhicule",
@@ -73,12 +89,13 @@ export const fr: TranslationKeys = {
     isDrivable: "Le véhicule roule-t-il ?",
     previousOwners: "Nombre de propriétaires précédents",
     comments: "Commentaires supplémentaires",
+    commentsPlaceholder: "Détails supplémentaires à partager...",
   },
   photos: {
     title: "Ajoutez des photos",
     subtitle: "Prenez des photos claires de votre véhicule",
     dragDrop: "Glissez-déposez ou cliquez pour ajouter",
-    maxSize: "Max 10 Mo par photo",
+    maxSize: "Max 10 Mo par photo (JPG, PNG, WebP)",
     front: "Vue avant",
     rear: "Vue arrière",
     side: "Vue latérale",
@@ -87,12 +104,15 @@ export const fr: TranslationKeys = {
     damage: "Dommages visibles",
   },
   analysis: {
+    title: "Analyse de votre véhicule",
+    subtitle: "Veuillez patienter pendant la préparation de votre estimation...",
     checking: "Détails du véhicule vérifiés",
     processing: "Photos traitées",
     preparing: "Estimation préparée",
   },
   estimation: {
     title: "Votre estimation",
+    indicativeEstimate: "Estimation indicative",
     disclaimer:
       "Ceci est une estimation indicative basée sur les informations fournies. L'offre finale sera confirmée après une inspection physique dans notre showroom.",
     range: "Fourchette estimée",
@@ -100,6 +120,7 @@ export const fr: TranslationKeys = {
     ctaSecondary: "Modifier mes informations",
     reassurance:
       "Offre finale confirmée après inspection physique en showroom",
+    finalOfferAfterInspection: "Offre finale après inspection physique",
   },
   contact: {
     title: "Vos coordonnées",
@@ -127,6 +148,8 @@ export const fr: TranslationKeys = {
     title: "Rendez-vous confirmé !",
     subtitle: "Nous avons hâte de vous voir",
     vehicleSummary: "Résumé du véhicule",
+    estimatedRange: "Fourchette estimée",
+    appointmentDetails: "Détails du rendez-vous",
     showroomDetails: "Détails du showroom",
     appointmentDate: "Date du rendez-vous",
     contactDetails: "Coordonnées",

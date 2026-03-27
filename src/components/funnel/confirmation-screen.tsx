@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Home, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   state: FunnelState;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function ConfirmationScreen({ state, onReset }: Props) {
+  const { t } = useLanguage();
   const { vehicleInfo, contactInfo, appointment, estimation } = state;
 
   return (
@@ -23,19 +25,18 @@ export function ConfirmationScreen({ state, onReset }: Props) {
             <CheckCircle className="w-8 h-8 text-success" />
           </div>
           <h2 className="text-2xl font-bold text-neutral-dark mb-2">
-            Appointment confirmed!
+            {t.confirmation.title}
           </h2>
           <p className="text-sm text-neutral-medium">
-            We look forward to seeing you
+            {t.confirmation.subtitle}
           </p>
         </div>
 
-        {/* Summary cards */}
         <div className="space-y-4 mb-8">
           {vehicleInfo && (
             <div className="bg-white rounded-2xl p-4 shadow-card">
               <h3 className="text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-2">
-                Vehicle summary
+                {t.confirmation.vehicleSummary}
               </h3>
               <p className="font-semibold text-neutral-dark">
                 {vehicleInfo.brand} {vehicleInfo.model} {vehicleInfo.year}
@@ -49,13 +50,13 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           {estimation && (
             <div className="bg-white rounded-2xl p-4 shadow-card">
               <h3 className="text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-2">
-                Estimated range
+                {t.confirmation.estimatedRange}
               </h3>
               <p className="font-semibold text-primary">
                 {estimation.min?.toLocaleString()} — {estimation.max?.toLocaleString()} {estimation.currency}
               </p>
               <p className="text-xs text-neutral-medium mt-1">
-                Final offer after physical inspection
+                {t.estimation.finalOfferAfterInspection}
               </p>
             </div>
           )}
@@ -63,7 +64,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           {appointment && (
             <div className="bg-white rounded-2xl p-4 shadow-card">
               <h3 className="text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-2">
-                Appointment details
+                {t.confirmation.appointmentDetails}
               </h3>
               <p className="font-semibold text-neutral-dark">
                 {appointment.date} at {appointment.timeSlot}
@@ -74,7 +75,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           {contactInfo && (
             <div className="bg-white rounded-2xl p-4 shadow-card">
               <h3 className="text-xs font-semibold text-neutral-medium uppercase tracking-wide mb-2">
-                Contact details
+                {t.confirmation.contactDetails}
               </h3>
               <p className="font-semibold text-neutral-dark">
                 {contactInfo.firstName} {contactInfo.lastName}
@@ -90,7 +91,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           <Link href="/" onClick={onReset}>
             <Button variant="outline" className="w-full" size="lg">
               <Home className="w-4 h-4 mr-2" />
-              Back to home
+              {t.confirmation.ctaHome}
             </Button>
           </Link>
           <a
@@ -100,7 +101,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           >
             <Button variant="secondary" className="w-full mt-3" size="lg">
               <MessageCircle className="w-4 h-4 mr-2" />
-              Contact us on WhatsApp
+              {t.confirmation.ctaWhatsApp}
             </Button>
           </a>
         </div>

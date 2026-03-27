@@ -4,6 +4,7 @@ import { FunnelState } from "@/lib/funnel-store";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { TrendingUp, Shield, ArrowRight, Edit } from "lucide-react";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   state: FunnelState;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function EstimationScreen({ state, onNext, onEdit }: Props) {
+  const { t } = useLanguage();
   const estimation = state.estimation;
   const vehicle = state.vehicleInfo;
 
@@ -22,7 +24,7 @@ export function EstimationScreen({ state, onNext, onEdit }: Props) {
       </div>
 
       <h2 className="text-2xl font-bold text-neutral-dark mb-2">
-        Your estimated value
+        {t.estimation.title}
       </h2>
 
       {vehicle && (
@@ -34,7 +36,7 @@ export function EstimationScreen({ state, onNext, onEdit }: Props) {
       {estimation && (
         <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 mb-6">
           <p className="text-xs font-medium text-primary mb-2 uppercase tracking-wide">
-            Estimated range
+            {t.estimation.range}
           </p>
           <p className="text-3xl font-extrabold text-primary">
             {formatCurrency(estimation.min)} — {formatCurrency(estimation.max)}
@@ -50,11 +52,10 @@ export function EstimationScreen({ state, onNext, onEdit }: Props) {
           <Shield className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-amber-800">
-              Indicative estimate
+              {t.estimation.indicativeEstimate}
             </p>
             <p className="text-xs text-amber-700 mt-1">
-              This is an indicative estimate based on the information provided.
-              The final offer will be confirmed after a physical inspection at our showroom.
+              {t.estimation.disclaimer}
             </p>
           </div>
         </div>
@@ -63,18 +64,18 @@ export function EstimationScreen({ state, onNext, onEdit }: Props) {
       <div className="bg-primary/5 rounded-xl p-3 mb-6 flex items-center gap-2 justify-center">
         <Shield className="w-4 h-4 text-primary" />
         <p className="text-xs font-medium text-primary">
-          Final offer confirmed after physical inspection in showroom
+          {t.estimation.reassurance}
         </p>
       </div>
 
       <div className="space-y-3">
         <Button onClick={onNext} className="w-full" size="lg">
-          Get my final offer
+          {t.estimation.ctaPrimary}
           <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
         <Button variant="ghost" onClick={onEdit} className="w-full">
           <Edit className="w-4 h-4 mr-2" />
-          Edit my information
+          {t.estimation.ctaSecondary}
         </Button>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { funnelStore } from "@/lib/funnel-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function ContactInfoStep({ onNext, onBack }: Props) {
+  const { t } = useLanguage();
   const existing = funnelStore.getState().contactInfo;
   const {
     register,
@@ -39,38 +41,38 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
 
   return (
     <div>
-      <h2 className="funnel-title">Your contact details</h2>
-      <p className="funnel-subtitle">So we can get in touch with you</p>
+      <h2 className="funnel-title">{t.contact.title}</h2>
+      <p className="funnel-subtitle">{t.contact.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
-            <Label>First name *</Label>
+            <Label>{t.contact.firstName} *</Label>
             <Input {...register("firstName")} placeholder="John" />
             {errors.firstName && <p className="form-error">{errors.firstName.message}</p>}
           </div>
           <div className="form-field">
-            <Label>Last name *</Label>
+            <Label>{t.contact.lastName} *</Label>
             <Input {...register("lastName")} placeholder="Doe" />
             {errors.lastName && <p className="form-error">{errors.lastName.message}</p>}
           </div>
         </div>
 
         <div className="form-field">
-          <Label>Email *</Label>
+          <Label>{t.contact.email} *</Label>
           <Input {...register("email")} type="email" placeholder="john@example.com" />
           {errors.email && <p className="form-error">{errors.email.message}</p>}
         </div>
 
         <div className="form-field">
-          <Label>Phone *</Label>
+          <Label>{t.contact.phone} *</Label>
           <Input {...register("phone")} type="tel" placeholder="+225 07 XX XX XX" />
           {errors.phone && <p className="form-error">{errors.phone.message}</p>}
         </div>
 
         <div className="form-field">
-          <Label>WhatsApp number</Label>
-          <Input {...register("whatsapp")} type="tel" placeholder="Same as phone or different" />
+          <Label>{t.contact.whatsapp}</Label>
+          <Input {...register("whatsapp")} type="tel" />
         </div>
 
         <div className="space-y-3 pt-2">
@@ -81,7 +83,7 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
               className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
             <span className="text-xs text-neutral-medium">
-              I agree to be contacted by AUTO24 regarding my vehicle sale *
+              {t.contact.consentContact} *
             </span>
           </label>
           {errors.consentContact && <p className="form-error">{errors.consentContact.message}</p>}
@@ -93,7 +95,7 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
               className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
             <span className="text-xs text-neutral-medium">
-              I accept the privacy policy and terms of use *
+              {t.contact.consentPrivacy} *
             </span>
           </label>
           {errors.consentPrivacy && <p className="form-error">{errors.consentPrivacy.message}</p>}
@@ -101,10 +103,10 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
 
         <div className="flex gap-3 pt-4">
           <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-            Back
+            {t.common.back}
           </Button>
           <Button type="submit" className="flex-1">
-            Next
+            {t.common.next}
           </Button>
         </div>
       </form>

@@ -4,32 +4,32 @@ import { useEffect, useState } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { funnelStore, FunnelState } from "@/lib/funnel-store";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onComplete: () => void;
   state: FunnelState;
 }
 
-const analysisSteps = [
-  { key: "checking", label: "Vehicle details checked" },
-  { key: "processing", label: "Photos processed" },
-  { key: "preparing", label: "Estimate prepared" },
-];
-
 export function AnalysisScreen({ onComplete, state }: Props) {
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
+
+  const analysisSteps = [
+    { key: "checking", label: t.analysis.checking },
+    { key: "processing", label: t.analysis.processing },
+    { key: "preparing", label: t.analysis.preparing },
+  ];
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
 
-    // Simulate analysis steps
     timers.push(setTimeout(() => setCurrentStep(1), 1200));
     timers.push(setTimeout(() => setCurrentStep(2), 2400));
     timers.push(
       setTimeout(async () => {
         setCurrentStep(3);
 
-        // Call estimation API
         if (state.vehicleInfo && state.vehicleCondition) {
           try {
             const res = await fetch("/api/estimation", {
@@ -43,7 +43,6 @@ export function AnalysisScreen({ onComplete, state }: Props) {
             const data = await res.json();
             funnelStore.setEstimation(data);
           } catch {
-            // Fallback estimation
             funnelStore.setEstimation({ min: 3_000_000, max: 5_000_000, currency: "XOF" });
           }
         }
@@ -62,10 +61,10 @@ export function AnalysisScreen({ onComplete, state }: Props) {
       </div>
 
       <h2 className="text-xl font-bold text-neutral-dark mb-2">
-        Analyzing your vehicle
+        {t.analysis.title}
       </h2>
       <p className="text-sm text-neutral-medium mb-8">
-        Please wait while we prepare your estimate...
+        {t.analysis.subtitle}
       </p>
 
       <div className="space-y-4 w-full max-w-xs">

@@ -4,27 +4,23 @@ import { fr } from "./fr";
 export const locales = { en, fr } as const;
 export type Locale = keyof typeof locales;
 
-// Default locale
-const DEFAULT_LOCALE: Locale = "en";
-
-let currentLocale: Locale = DEFAULT_LOCALE;
-
-export function setLocale(locale: Locale) {
-  currentLocale = locale;
+export function getTranslations(locale: Locale) {
+  return locales[locale];
 }
 
-export function getLocale(): Locale {
-  return currentLocale;
-}
+// Country to language mapping
+const COUNTRY_LANGUAGE_MAP: Record<string, Locale> = {
+  MA: "fr", // Morocco
+  SN: "fr", // Senegal
+  CI: "fr", // Ivory Coast
+  BJ: "fr", // Benin
+  TG: "fr", // Togo
+  ZA: "en", // South Africa
+  RW: "en", // Rwanda
+  KE: "en", // Kenya
+  GH: "en", // Ghana
+};
 
-export function t<
-  S extends keyof typeof en,
-  K extends keyof (typeof en)[S],
->(section: S, key: K): (typeof en)[S][K] {
-  const translations = locales[currentLocale];
-  return (translations[section] as Record<string, unknown>)[key as string] as (typeof en)[S][K];
-}
-
-export function useTranslations() {
-  return locales[currentLocale];
+export function getLanguageForCountry(countryCode: string): Locale | null {
+  return COUNTRY_LANGUAGE_MAP[countryCode] || null;
 }

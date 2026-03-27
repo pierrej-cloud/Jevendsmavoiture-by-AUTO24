@@ -7,15 +7,31 @@ import { Button } from "@/components/ui/button";
 import { PHOTO_CATEGORIES } from "@/lib/constants";
 import { Camera, X, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
   onBack: () => void;
 }
 
+const PHOTO_LABEL_KEYS = {
+  front: "front",
+  rear: "rear",
+  side: "side",
+  interior: "interior",
+  dashboard: "dashboard",
+  damage: "damage",
+} as const;
+
 export function PhotoUploadStep({ onNext, onBack }: Props) {
+  const { t } = useLanguage();
   const [photos, setPhotos] = useState<PhotoFile[]>(funnelStore.getState().photos);
   const [activeCategory, setActiveCategory] = useState<string>("front");
+
+  const getPhotoLabel = (catId: string) => {
+    const key = PHOTO_LABEL_KEYS[catId as keyof typeof PHOTO_LABEL_KEYS];
+    return key ? t.photos[key] : catId;
+  };
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -26,7 +42,6 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
       }));
 
       setPhotos((prev) => {
-        // Replace existing photo for this category
         const filtered = prev.filter((p) => p.category !== activeCategory);
         return [...filtered, ...newPhotos];
       });
@@ -37,7 +52,7 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [".jpg", ".jpeg", ".png", ".webp"] },
-    maxSize: 10 * 1024 * 1024, // 10MB
+    maxSize: 10 * 1024 * 1024,
     maxFiles: 1,
   });
 
@@ -61,10 +76,9 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
 
   return (
     <div>
-      <h2 className="funnel-title">Upload photos</h2>
-      <p className="funnel-subtitle">Add clear photos of your vehicle</p>
+      <h2 className="funnel-title">{t.photos.title}</h2>
+      <p className="funnel-subtitle">{t.photos.subtitle}</p>
 
-      {/* Category tabs */}
       <div className="flex flex-wrap gap-2 mb-4">
         {PHOTO_CATEGORIES.map((cat) => {
           const hasPhoto = !!getPhotoForCategory(cat.id);
@@ -82,14 +96,13 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
                     : "border-gray-200 text-neutral-medium hover:border-gray-300"
               )}
             >
-              {cat.label} {cat.required && !hasPhoto && "*"}
+              {getPhotoLabel(cat.id)} {cat.required && !hasPhoto && "*"}
               {hasPhoto && " ✓"}
             </button>
           );
         })}
       </div>
 
-      {/* Upload zone */}
       {getPhotoForCategory(activeCategory) ? (
         <div className="relative rounded-2xl overflow-hidden mb-4">
           <img
@@ -124,17 +137,16 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
             )}
             <div>
               <p className="font-medium text-sm text-neutral-dark">
-                {isDragActive ? "Drop your photo here" : "Drag & drop or click to upload"}
+                {isDragActive ? t.common.dropPhotoHere : t.photos.dragDrop}
               </p>
               <p className="text-xs text-neutral-medium mt-1">
-                Max 10MB per photo (JPG, PNG, WebP)
+                {t.photos.maxSize}
               </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Photo grid preview */}
       <div className="grid grid-cols-3 gap-2 mb-6">
         {PHOTO_CATEGORIES.map((cat) => {
           const photo = getPhotoForCategory(cat.id);
@@ -150,11 +162,11 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
               )}
             >
               {photo ? (
-                <img src={photo.preview} alt={cat.label} className="w-full h-full object-cover" />
+                <img src={photo.preview} alt={getPhotoLabel(cat.id)} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center gap-1">
                   <Camera className="w-4 h-4 text-neutral-medium" />
-                  <span className="text-[10px] text-neutral-medium">{cat.label}</span>
+                  <span className="text-[10px] text-neutral-medium">{getPhotoLabel(cat.id)}</span>
                 </div>
               )}
             </button>
@@ -164,15 +176,15 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
 
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-          Back
+          {t.common.back}
         </Button>
         <Button onClick={handleNext} className="flex-1" disabled={!hasAllRequired}>
-          Next
+          {t.common.next}
         </Button>
       </div>
       {!hasAllRequired && (
         <p className="text-xs text-neutral-medium text-center mt-2">
-          Please upload all required photos (front, rear, side, interior)
+          {t.common.requiredPhotosHint}
         </p>
       )}
     </div>

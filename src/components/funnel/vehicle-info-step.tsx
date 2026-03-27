@@ -9,12 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { CAR_BRANDS, FUEL_TYPES, TRANSMISSIONS, COUNTRIES } from "@/lib/constants";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
 }
 
 export function VehicleInfoStep({ onNext }: Props) {
+  const { t, setLocaleFromCountry } = useLanguage();
   const existing = funnelStore.getState().vehicleInfo;
   const {
     register,
@@ -51,39 +53,39 @@ export function VehicleInfoStep({ onNext }: Props) {
 
   return (
     <div>
-      <h2 className="funnel-title">Tell us about your car</h2>
-      <p className="funnel-subtitle">Fill in your vehicle details</p>
+      <h2 className="funnel-title">{t.vehicle.title}</h2>
+      <p className="funnel-subtitle">{t.vehicle.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="form-field">
-          <Label>Brand *</Label>
+          <Label>{t.vehicle.brand} *</Label>
           <Select
             {...register("brand")}
             options={CAR_BRANDS.map((b) => ({ value: b, label: b }))}
-            placeholder="Select brand"
+            placeholder={t.vehicle.selectBrand}
           />
           {errors.brand && <p className="form-error">{errors.brand.message}</p>}
         </div>
 
         <div className="form-field">
-          <Label>Model *</Label>
+          <Label>{t.vehicle.model} *</Label>
           <Input {...register("model")} placeholder="e.g. Corolla, Civic, Golf" />
           {errors.model && <p className="form-error">{errors.model.message}</p>}
         </div>
 
         <div className="form-field">
-          <Label>Version / Trim</Label>
+          <Label>{t.vehicle.version}</Label>
           <Input {...register("version")} placeholder="e.g. SE, Sport, Limited" />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
-            <Label>Year *</Label>
-            <Select {...register("year")} options={years} placeholder="Year" />
+            <Label>{t.vehicle.year} *</Label>
+            <Select {...register("year")} options={years} placeholder={t.vehicle.selectYear} />
             {errors.year && <p className="form-error">{errors.year.message}</p>}
           </div>
           <div className="form-field">
-            <Label>Mileage (km) *</Label>
+            <Label>{t.vehicle.mileage} *</Label>
             <Input {...register("mileage")} type="number" placeholder="e.g. 80000" />
             {errors.mileage && <p className="form-error">{errors.mileage.message}</p>}
           </div>
@@ -91,20 +93,20 @@ export function VehicleInfoStep({ onNext }: Props) {
 
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
-            <Label>Fuel type *</Label>
+            <Label>{t.vehicle.fuelType} *</Label>
             <Select
               {...register("fuelType")}
               options={FUEL_TYPES.map((f) => ({ value: f.value, label: f.label }))}
-              placeholder="Fuel type"
+              placeholder={t.vehicle.selectFuelType}
             />
             {errors.fuelType && <p className="form-error">{errors.fuelType.message}</p>}
           </div>
           <div className="form-field">
-            <Label>Transmission *</Label>
+            <Label>{t.vehicle.transmission} *</Label>
             <Select
               {...register("transmission")}
-              options={TRANSMISSIONS.map((t) => ({ value: t.value, label: t.label }))}
-              placeholder="Transmission"
+              options={TRANSMISSIONS.map((tr) => ({ value: tr.value, label: tr.label }))}
+              placeholder={t.vehicle.selectTransmission}
             />
             {errors.transmission && <p className="form-error">{errors.transmission.message}</p>}
           </div>
@@ -112,32 +114,36 @@ export function VehicleInfoStep({ onNext }: Props) {
 
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
-            <Label>Engine size</Label>
+            <Label>{t.vehicle.engineSize}</Label>
             <Input {...register("engineSize")} placeholder="e.g. 1.6L" />
           </div>
           <div className="form-field">
-            <Label>Color</Label>
+            <Label>{t.vehicle.color}</Label>
             <Input {...register("color")} placeholder="e.g. Black" />
           </div>
         </div>
 
         <div className="form-field">
-          <Label>Registration number</Label>
-          <Input {...register("registrationNo")} placeholder="Optional" />
+          <Label>{t.vehicle.registrationNo}</Label>
+          <Input {...register("registrationNo")} placeholder={t.common.optional} />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
-            <Label>Country *</Label>
+            <Label>{t.vehicle.country} *</Label>
             <Select
-              {...register("country")}
+              {...register("country", {
+                onChange: (e) => {
+                  setLocaleFromCountry(e.target.value);
+                },
+              })}
               options={COUNTRIES.map((c) => ({ value: c.value, label: c.label }))}
-              placeholder="Country"
+              placeholder={t.vehicle.selectCountry}
             />
             {errors.country && <p className="form-error">{errors.country.message}</p>}
           </div>
           <div className="form-field">
-            <Label>City *</Label>
+            <Label>{t.vehicle.city} *</Label>
             <Input {...register("city")} placeholder="e.g. Abidjan" />
             {errors.city && <p className="form-error">{errors.city.message}</p>}
           </div>
@@ -145,7 +151,7 @@ export function VehicleInfoStep({ onNext }: Props) {
 
         <div className="pt-4">
           <Button type="submit" className="w-full" size="lg">
-            Next
+            {t.common.next}
           </Button>
         </div>
       </form>

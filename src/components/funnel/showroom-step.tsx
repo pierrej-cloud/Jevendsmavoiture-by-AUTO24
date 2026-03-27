@@ -5,6 +5,7 @@ import { funnelStore } from "@/lib/funnel-store";
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Showroom {
   id: string;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export function ShowroomStep({ onNext, onBack }: Props) {
+  const { t } = useLanguage();
   const [showrooms, setShowrooms] = useState<Showroom[]>([]);
   const [selected, setSelected] = useState<string>(
     funnelStore.getState().appointment?.showroomId || ""
@@ -51,15 +53,15 @@ export function ShowroomStep({ onNext, onBack }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-pulse text-neutral-medium">Loading showrooms...</div>
+        <div className="animate-pulse text-neutral-medium">{t.common.loadingShowrooms}</div>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="funnel-title">Choose a showroom</h2>
-      <p className="funnel-subtitle">Select the AUTO24 showroom nearest to you</p>
+      <h2 className="funnel-title">{t.showroom.title}</h2>
+      <p className="funnel-subtitle">{t.showroom.subtitle}</p>
 
       <div className="space-y-3 mb-6">
         {showrooms.map((s) => (
@@ -89,10 +91,10 @@ export function ShowroomStep({ onNext, onBack }: Props) {
 
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-          Back
+          {t.common.back}
         </Button>
         <Button onClick={handleNext} className="flex-1" disabled={!selected}>
-          Next
+          {t.common.next}
         </Button>
       </div>
     </div>

@@ -9,6 +9,13 @@ export const en = {
     optional: "Optional",
     yes: "Yes",
     no: "No",
+    step: "Step",
+    of: "of",
+    submitting: "Submitting...",
+    confirmAppointment: "Confirm appointment",
+    loadingShowrooms: "Loading showrooms...",
+    requiredPhotosHint: "Please upload all required photos (front, rear, side, interior)",
+    dropPhotoHere: "Drop your photo here",
   },
   landing: {
     heroTitle: "Sell your car in a few simple steps",
@@ -38,9 +45,13 @@ export const en = {
     whySell: {
       title: "Why sell with AUTO24",
       inspection: "Professional inspection",
+      inspectionDesc: "Thorough multi-point vehicle assessment",
       experts: "Trusted automotive experts",
+      expertsDesc: "Experienced team across Africa",
       transparent: "Transparent process",
+      transparentDesc: "Clear steps from estimate to final offer",
       followUp: "Fast follow-up",
+      followUpDesc: "Quick response and payment",
     },
   },
   vehicle: {
@@ -58,6 +69,11 @@ export const en = {
     registrationNo: "Registration number",
     country: "Country",
     city: "City",
+    selectBrand: "Select brand",
+    selectYear: "Year",
+    selectFuelType: "Fuel type",
+    selectTransmission: "Transmission",
+    selectCountry: "Country",
   },
   condition: {
     title: "Vehicle condition",
@@ -71,12 +87,13 @@ export const en = {
     isDrivable: "Is the vehicle drivable?",
     previousOwners: "Number of previous owners",
     comments: "Additional comments",
+    commentsPlaceholder: "Any details you'd like to share...",
   },
   photos: {
     title: "Upload photos",
     subtitle: "Add clear photos of your vehicle",
     dragDrop: "Drag & drop or click to upload",
-    maxSize: "Max 10MB per photo",
+    maxSize: "Max 10MB per photo (JPG, PNG, WebP)",
     front: "Front view",
     rear: "Rear view",
     side: "Side view",
@@ -85,12 +102,15 @@ export const en = {
     damage: "Visible damage",
   },
   analysis: {
+    title: "Analyzing your vehicle",
+    subtitle: "Please wait while we prepare your estimate...",
     checking: "Vehicle details checked",
     processing: "Photos processed",
     preparing: "Estimate prepared",
   },
   estimation: {
     title: "Your estimated value",
+    indicativeEstimate: "Indicative estimate",
     disclaimer:
       "This is an indicative estimate based on the information provided. The final offer will be confirmed after a physical inspection at our showroom.",
     range: "Estimated range",
@@ -98,6 +118,7 @@ export const en = {
     ctaSecondary: "Edit my information",
     reassurance:
       "Final offer confirmed after physical inspection in showroom",
+    finalOfferAfterInspection: "Final offer after physical inspection",
   },
   contact: {
     title: "Your contact details",
@@ -125,6 +146,8 @@ export const en = {
     title: "Appointment confirmed!",
     subtitle: "We look forward to seeing you",
     vehicleSummary: "Vehicle summary",
+    estimatedRange: "Estimated range",
+    appointmentDetails: "Appointment details",
     showroomDetails: "Showroom details",
     appointmentDate: "Appointment date",
     contactDetails: "Contact details",

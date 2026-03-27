@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { TIME_SLOTS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { format, addDays, isWeekend } from "date-fns";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
@@ -15,7 +16,7 @@ interface Props {
 
 function getAvailableDates(): Date[] {
   const dates: Date[] = [];
-  let day = addDays(new Date(), 1); // Start from tomorrow
+  let day = addDays(new Date(), 1);
   while (dates.length < 10) {
     if (!isWeekend(day)) {
       dates.push(day);
@@ -26,6 +27,7 @@ function getAvailableDates(): Date[] {
 }
 
 export function AppointmentStep({ onNext, onBack, state }: Props) {
+  const { t } = useLanguage();
   const appointment = state.appointment;
   const [selectedDate, setSelectedDate] = useState(appointment?.date || "");
   const [selectedTime, setSelectedTime] = useState(appointment?.timeSlot || "");
@@ -44,7 +46,6 @@ export function AppointmentStep({ onNext, onBack, state }: Props) {
       timeSlot: selectedTime,
     });
 
-    // Submit entire lead
     try {
       const currentState = funnelStore.getState();
       const formData = new FormData();
@@ -60,7 +61,6 @@ export function AppointmentStep({ onNext, onBack, state }: Props) {
         },
       }));
 
-      // Append photos
       currentState.photos.forEach((photo) => {
         formData.append(`photo_${photo.category}`, photo.file);
       });
@@ -84,13 +84,11 @@ export function AppointmentStep({ onNext, onBack, state }: Props) {
 
   return (
     <div>
-      <h2 className="funnel-title">Book your appointment</h2>
-      <p className="funnel-subtitle">
-        Choose a date and time for your vehicle inspection
-      </p>
+      <h2 className="funnel-title">{t.appointment.title}</h2>
+      <p className="funnel-subtitle">{t.appointment.subtitle}</p>
 
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-neutral-dark mb-3">Select a date</h3>
+        <h3 className="text-sm font-semibold text-neutral-dark mb-3">{t.appointment.selectDate}</h3>
         <div className="grid grid-cols-2 gap-2">
           {dates.map((date) => {
             const dateStr = format(date, "yyyy-MM-dd");
@@ -119,7 +117,7 @@ export function AppointmentStep({ onNext, onBack, state }: Props) {
       </div>
 
       <div className="mb-6">
-        <h3 className="text-sm font-semibold text-neutral-dark mb-3">Select a time slot</h3>
+        <h3 className="text-sm font-semibold text-neutral-dark mb-3">{t.appointment.selectTime}</h3>
         <div className="grid grid-cols-4 gap-2">
           {TIME_SLOTS.map((slot) => (
             <button
@@ -141,14 +139,14 @@ export function AppointmentStep({ onNext, onBack, state }: Props) {
 
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-          Back
+          {t.common.back}
         </Button>
         <Button
           onClick={handleSubmit}
           className="flex-1"
           disabled={!selectedDate || !selectedTime || submitting}
         >
-          {submitting ? "Submitting..." : "Confirm appointment"}
+          {submitting ? t.common.submitting : t.common.confirmAppointment}
         </Button>
       </div>
     </div>
