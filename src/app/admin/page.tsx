@@ -80,7 +80,7 @@ export default function AdminDashboard() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/images/logo-auto24.svg" alt="AUTO24" className="h-7 w-auto" />
+            <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
             <h1 className="font-bold text-neutral-dark">Lead Management</h1>
           </div>
           <Button

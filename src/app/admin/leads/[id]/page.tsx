@@ -127,7 +127,7 @@ export default function LeadDetailPage() {
               Back
             </Button>
           </Link>
-          <img src="/images/logo-auto24.svg" alt="AUTO24" className="h-7 w-auto" />
+          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
           <h1 className="font-bold text-neutral-dark">Lead Detail</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>

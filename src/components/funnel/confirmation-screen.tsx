@@ -25,7 +25,8 @@ export function ConfirmationScreen({ state, onReset }: Props) {
           <img
             src="/images/logo-auto24.svg"
             alt="AUTO24"
-            className="h-10 w-auto mx-auto mb-4"
+            style={{ height: "40px", width: "auto", objectFit: "contain" }}
+            className="mx-auto mb-4"
           />
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-success" />

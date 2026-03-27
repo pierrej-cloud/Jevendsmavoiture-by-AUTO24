@@ -41,7 +41,8 @@ export function LandingHero() {
         <img
           src="/images/logo-auto24.svg"
           alt="AUTO24"
-          className="h-12 w-auto mx-auto mb-4"
+          style={{ height: "48px", width: "auto", objectFit: "contain" }}
+          className="mx-auto mb-4"
         />
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-dark leading-tight mb-4">
           {t.landing.heroTitle}
