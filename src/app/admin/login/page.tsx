@@ -42,9 +42,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mx-auto mb-3">
-            <span className="text-white font-bold text-lg">A24</span>
-          </div>
+          <img src="/images/logo-auto24.svg" alt="AUTO24" className="h-12 w-auto mx-auto mb-3" />
           <h1 className="text-xl font-bold text-neutral-dark">Admin Login</h1>
           <p className="text-sm text-neutral-medium">Jevendsmavoiture Back-office</p>
         </div>

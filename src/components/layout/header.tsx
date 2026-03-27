@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/i18n/language-context";
 import { cn } from "@/lib/utils";
 
@@ -11,13 +12,16 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">A24</span>
-          </div>
+          <Image
+            src="/images/logo-auto24.svg"
+            alt="AUTO24"
+            width={96}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
           <span className="text-sm">
             <span className="font-bold text-neutral-dark">{t.header.brandName}</span>
-            {" "}
-            <span className="font-normal text-neutral-medium">{t.header.brandSuffix}</span>
           </span>
         </Link>
 

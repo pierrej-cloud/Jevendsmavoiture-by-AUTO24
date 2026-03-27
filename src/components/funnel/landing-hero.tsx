@@ -37,6 +37,12 @@ export function LandingHero() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
 
       <div className="relative max-w-lg mx-auto px-4 pt-12 pb-8 text-center">
+        {/* Logo */}
+        <img
+          src="/images/logo-auto24.svg"
+          alt="AUTO24"
+          className="h-12 w-auto mx-auto mb-4"
+        />
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-dark leading-tight mb-4">
           {t.landing.heroTitle}
         </h1>

@@ -127,6 +127,7 @@ export default function LeadDetailPage() {
               Back
             </Button>
           </Link>
+          <img src="/images/logo-auto24.svg" alt="AUTO24" className="h-7 w-auto" />
           <h1 className="font-bold text-neutral-dark">Lead Detail</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>
