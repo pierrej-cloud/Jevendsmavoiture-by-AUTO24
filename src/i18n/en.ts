@@ -17,12 +17,18 @@ export const en = {
     requiredPhotosHint: "Please upload all required photos (front, rear, side, interior)",
     dropPhotoHere: "Drop your photo here",
   },
+  header: {
+    brandName: "SellYourCar",
+    brandSuffix: "by AUTO24",
+  },
   landing: {
     heroTitle: "Sell your car in a few simple steps",
     heroSubtitle:
       "Get an estimated value, book an inspection, and receive your final offer from AUTO24.",
     ctaStart: "Start now",
     ctaHow: "How it works",
+    countryQuestion: "Which country are you in?",
+    countryPlaceholder: "— Select your country —",
     reassurance: {
       fast: "Fast",
       fastDesc: "Get your estimate in minutes",

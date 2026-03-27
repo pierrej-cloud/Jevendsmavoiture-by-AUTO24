@@ -9,6 +9,7 @@ export interface PhotoFile {
 }
 
 export interface FunnelState {
+  selectedCountry: string | null;
   vehicleInfo: VehicleInfoData | null;
   vehicleCondition: VehicleConditionData | null;
   photos: PhotoFile[];
@@ -19,6 +20,7 @@ export interface FunnelState {
 }
 
 const INITIAL_STATE: FunnelState = {
+  selectedCountry: null,
   vehicleInfo: null,
   vehicleCondition: null,
   photos: [],
@@ -44,6 +46,11 @@ export const funnelStore = {
     return () => {
       listeners = listeners.filter((l) => l !== listener);
     };
+  },
+
+  setSelectedCountry: (country: string) => {
+    state = { ...state, selectedCountry: country };
+    notify();
   },
 
   setVehicleInfo: (data: VehicleInfoData) => {

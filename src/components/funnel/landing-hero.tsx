@@ -1,12 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Zap, CheckCircle, Shield } from "lucide-react";
 import { useLanguage } from "@/i18n/language-context";
+import { funnelStore } from "@/lib/funnel-store";
+
+const LANDING_COUNTRIES = [
+  { value: "MA", flag: "🇲🇦", label: "Maroc" },
+  { value: "SN", flag: "🇸🇳", label: "Sénégal" },
+  { value: "CI", flag: "🇨🇮", label: "Côte d'Ivoire" },
+  { value: "ZA", flag: "🇿🇦", labelFr: "Afrique du Sud", labelEn: "South Africa" },
+  { value: "RW", flag: "🇷🇼", label: "Rwanda" },
+] as const;
 
 export function LandingHero() {
-  const { t } = useLanguage();
+  const { t, locale, setLocaleFromCountry } = useLanguage();
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const handleCountryChange = (value: string) => {
+    setSelectedCountry(value);
+    setLocaleFromCountry(value);
+    funnelStore.setSelectedCountry(value);
+  };
+
+  const getCountryLabel = (c: typeof LANDING_COUNTRIES[number]) => {
+    if ("labelFr" in c) {
+      return locale === "fr" ? c.labelFr : c.labelEn;
+    }
+    return c.label;
+  };
 
   return (
     <section className="relative overflow-hidden">
@@ -16,13 +40,38 @@ export function LandingHero() {
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-dark leading-tight mb-4">
           {t.landing.heroTitle}
         </h1>
-        <p className="text-neutral-medium text-base mb-8 max-w-md mx-auto">
+        <p className="text-neutral-medium text-base mb-6 max-w-md mx-auto">
           {t.landing.heroSubtitle}
         </p>
 
+        {/* Country selector */}
+        <div className="max-w-[320px] mx-auto mb-8">
+          <p className="text-sm font-medium text-neutral-dark mb-2">
+            {t.landing.countryQuestion}
+          </p>
+          <select
+            value={selectedCountry}
+            onChange={(e) => handleCountryChange(e.target.value)}
+            className="w-full h-12 rounded-xl border-2 border-gray-200 bg-white px-4 text-sm transition-colors appearance-none text-center focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          >
+            <option value="" disabled>
+              {t.landing.countryPlaceholder}
+            </option>
+            {LANDING_COUNTRIES.map((c) => (
+              <option key={c.value} value={c.value}>
+                {c.flag}  {getCountryLabel(c)}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center mb-10">
-          <Link href="/sell">
-            <Button size="lg" className="w-full sm:w-auto">
+          <Link href="/sell" aria-disabled={!selectedCountry} tabIndex={selectedCountry ? undefined : -1}>
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              disabled={!selectedCountry}
+            >
               {t.landing.ctaStart}
             </Button>
           </Link>

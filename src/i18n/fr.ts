@@ -19,12 +19,18 @@ export const fr: TranslationKeys = {
     requiredPhotosHint: "Veuillez ajouter toutes les photos requises (avant, arrière, côté, intérieur)",
     dropPhotoHere: "Déposez votre photo ici",
   },
+  header: {
+    brandName: "Jevendsmavoiture",
+    brandSuffix: "by AUTO24",
+  },
   landing: {
     heroTitle: "Vendez votre voiture en quelques étapes simples",
     heroSubtitle:
       "Obtenez une estimation, réservez une inspection et recevez votre offre finale d'AUTO24.",
     ctaStart: "Commencer",
     ctaHow: "Comment ça marche",
+    countryQuestion: "Dans quel pays êtes-vous ?",
+    countryPlaceholder: "— Sélectionnez votre pays —",
     reassurance: {
       fast: "Rapide",
       fastDesc: "Obtenez votre estimation en quelques minutes",

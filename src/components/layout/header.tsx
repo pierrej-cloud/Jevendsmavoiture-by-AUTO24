@@ -5,7 +5,7 @@ import { useLanguage } from "@/i18n/language-context";
 import { cn } from "@/lib/utils";
 
 export function Header() {
-  const { locale, setLocale } = useLanguage();
+  const { locale, setLocale, t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -14,8 +14,10 @@ export function Header() {
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">A24</span>
           </div>
-          <span className="font-bold text-neutral-dark text-sm">
-            Jevendsmavoiture
+          <span className="text-sm">
+            <span className="font-bold text-neutral-dark">{t.header.brandName}</span>
+            {" "}
+            <span className="font-normal text-neutral-medium">{t.header.brandSuffix}</span>
           </span>
         </Link>
 

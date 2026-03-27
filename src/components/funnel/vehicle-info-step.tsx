@@ -18,6 +18,7 @@ interface Props {
 export function VehicleInfoStep({ onNext }: Props) {
   const { t, setLocaleFromCountry } = useLanguage();
   const existing = funnelStore.getState().vehicleInfo;
+  const preselectedCountry = funnelStore.getState().selectedCountry;
   const {
     register,
     handleSubmit,
@@ -35,7 +36,7 @@ export function VehicleInfoStep({ onNext }: Props) {
       engineSize: "",
       color: "",
       registrationNo: "",
-      country: "",
+      country: preselectedCountry || "",
       city: "",
     },
   });
