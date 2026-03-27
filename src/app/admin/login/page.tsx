@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -42,7 +43,9 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "48px", width: "auto", objectFit: "contain", paddingTop: "4px" }} className="mx-auto mb-3" />
+          <div className="flex justify-center mb-3">
+            <Auto24Logo size={56} />
+          </div>
           <h1 className="text-xl font-bold text-neutral-dark">Admin Login</h1>
           <p className="text-sm text-neutral-medium">Jevendsmavoiture Back-office</p>
         </div>

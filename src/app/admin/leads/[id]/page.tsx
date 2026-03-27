@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { LEAD_STATUSES } from "@/lib/constants";
 import { ArrowLeft, User, Car, Calendar, MapPin, MessageSquare, History, Image } from "lucide-react";
 import Link from "next/link";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 interface LeadDetail {
   id: string;
@@ -119,15 +120,15 @@ export default function LeadDetailPage() {
 
   return (
     <div>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50" style={{ overflow: "visible" }}>
-        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3" style={{ overflow: "visible" }}>
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3">
           <Link href="/admin">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back
             </Button>
           </Link>
-          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "28px", width: "auto", objectFit: "contain", paddingTop: "4px" }} />
+          <Auto24Logo size={32} />
           <h1 className="font-bold text-neutral-dark">Lead Detail</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>

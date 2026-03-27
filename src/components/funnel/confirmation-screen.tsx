@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Home, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 interface Props {
   state: FunnelState;
@@ -22,13 +23,8 @@ export function ConfirmationScreen({ state, onReset }: Props) {
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-8">
         <div className="text-center mb-8">
           {/* AUTO24 Logo */}
-          <div style={{ overflow: "visible" }}>
-            <img
-              src="/images/logo-auto24.svg"
-              alt="AUTO24"
-              style={{ height: "40px", width: "auto", objectFit: "contain", paddingTop: "4px" }}
-              className="mx-auto mb-4"
-            />
+          <div className="flex justify-center mb-4">
+            <Auto24Logo size={52} />
           </div>
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-success" />

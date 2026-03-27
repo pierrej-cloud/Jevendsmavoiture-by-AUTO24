@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">
-  <!-- Open circle arc (gap at bottom-right) -->
-  <path d="M190 130 A80 80 0 1 0 175 55" stroke="#2962FF" stroke-width="16" stroke-linecap="round" fill="none"/>
-  <!-- AUTO24 text -->
-  <text x="120" y="138" text-anchor="middle" font-family="'Arial Black', 'Helvetica', sans-serif" font-weight="900" font-size="48" fill="#2962FF" letter-spacing="0">AUTO24</text>
-</svg>
