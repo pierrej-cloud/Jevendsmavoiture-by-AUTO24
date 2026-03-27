@@ -119,15 +119,15 @@ export default function LeadDetailPage() {
 
   return (
     <div>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50" style={{ overflow: "visible" }}>
+        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3" style={{ overflow: "visible" }}>
           <Link href="/admin">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back
             </Button>
           </Link>
-          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
+          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "28px", width: "auto", objectFit: "contain", paddingTop: "4px" }} />
           <h1 className="font-bold text-neutral-dark">Lead Detail</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>

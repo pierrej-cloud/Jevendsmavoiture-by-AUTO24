@@ -22,12 +22,14 @@ export function ConfirmationScreen({ state, onReset }: Props) {
       <main className="flex-1 max-w-lg mx-auto w-full px-4 py-8">
         <div className="text-center mb-8">
           {/* AUTO24 Logo */}
-          <img
-            src="/images/logo-auto24.svg"
-            alt="AUTO24"
-            style={{ height: "40px", width: "auto", objectFit: "contain" }}
-            className="mx-auto mb-4"
-          />
+          <div style={{ overflow: "visible" }}>
+            <img
+              src="/images/logo-auto24.svg"
+              alt="AUTO24"
+              style={{ height: "40px", width: "auto", objectFit: "contain", paddingTop: "4px" }}
+              className="mx-auto mb-4"
+            />
+          </div>
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-success" />
           </div>

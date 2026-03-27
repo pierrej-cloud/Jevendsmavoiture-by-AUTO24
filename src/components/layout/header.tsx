@@ -8,13 +8,13 @@ export function Header() {
   const { locale, setLocale, t } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 min-h-[56px]">
-      <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 min-h-[56px]" style={{ overflow: "visible" }}>
+      <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between" style={{ overflow: "visible" }}>
+        <Link href="/" className="flex items-center gap-2" style={{ overflow: "visible", alignItems: "center" }}>
           <img
             src="/images/logo-auto24.svg"
             alt="AUTO24"
-            style={{ height: "32px", width: "auto", objectFit: "contain" }}
+            style={{ height: "32px", width: "auto", objectFit: "contain", paddingTop: "4px" }}
           />
           <span className="text-sm">
             <span className="font-bold text-neutral-dark">{t.header.brandName}</span>

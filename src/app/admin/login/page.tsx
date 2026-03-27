@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "48px", width: "auto", objectFit: "contain" }} className="mx-auto mb-3" />
+          <img src="/images/logo-auto24.svg" alt="AUTO24" style={{ height: "48px", width: "auto", objectFit: "contain", paddingTop: "4px" }} className="mx-auto mb-3" />
           <h1 className="text-xl font-bold text-neutral-dark">Admin Login</h1>
           <p className="text-sm text-neutral-medium">Jevendsmavoiture Back-office</p>
         </div>
