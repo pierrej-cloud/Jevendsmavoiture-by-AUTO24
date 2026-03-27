@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Zap, CheckCircle, Shield } from "lucide-react";
 import { useLanguage } from "@/i18n/language-context";
 import { funnelStore } from "@/lib/funnel-store";
-import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 const LANDING_COUNTRIES = [
   { value: "MA", flag: "🇲🇦", label: "Maroc" },
@@ -39,8 +38,8 @@ export function LandingHero() {
 
       <div className="relative max-w-lg mx-auto px-4 pt-12 pb-8 text-center">
         {/* Logo */}
-        <div className="flex justify-center mb-4">
-          <Auto24Logo size={64} />
+        <div className="flex justify-center mb-4" style={{ overflow: "visible", alignItems: "center" }}>
+          <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "64px", width: "auto", objectFit: "contain", display: "block" }} />
         </div>
         <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-dark leading-tight mb-4">
           {t.landing.heroTitle}

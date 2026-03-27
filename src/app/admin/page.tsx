@@ -8,7 +8,6 @@ import { Select } from "@/components/ui/select";
 import { LEAD_STATUSES } from "@/lib/constants";
 import { LogOut, Eye, Car, Calendar, User } from "lucide-react";
 import Link from "next/link";
-import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 interface Lead {
   id: string;
@@ -81,7 +80,7 @@ export default function AdminDashboard() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Auto24Logo size={32} />
+            <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "32px", width: "auto", objectFit: "contain", display: "block" }} />
             <h1 className="font-bold text-neutral-dark">Lead Management</h1>
           </div>
           <Button
