@@ -172,6 +172,7 @@ export const en = {
     title: "Choose a showroom",
     subtitle: "Select the AUTO24 showroom nearest to you",
     openingHours: "Opening hours",
+    preselected: "Your nearest AUTO24 showroom has been pre-selected.",
   },
   appointment: {
     title: "Book your appointment",

@@ -174,6 +174,7 @@ export const fr: TranslationKeys = {
     title: "Choisissez un showroom",
     subtitle: "Sélectionnez le showroom AUTO24 le plus proche",
     openingHours: "Horaires d'ouverture",
+    preselected: "Votre showroom AUTO24 le plus proche a été présélectionné.",
   },
   appointment: {
     title: "Réservez votre rendez-vous",
