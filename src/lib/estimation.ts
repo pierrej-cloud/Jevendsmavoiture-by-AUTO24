@@ -4,12 +4,28 @@ interface EstimationInput {
   brand: string;
   model: string;
   year: number;
-  mileage: number;
+  mileage: number | string;
   fuelType: string;
   country: string;
   generalCondition: ConditionRating;
   accidentHistory: boolean;
   mechanicalIssues: boolean;
+}
+
+// Convert mileage range string to midpoint number
+function parseMileage(mileage: number | string): number {
+  if (typeof mileage === "number") return mileage;
+  const rangeMap: Record<string, number> = {
+    "0-10000": 5_000,
+    "10000-30000": 20_000,
+    "30000-50000": 40_000,
+    "50000-80000": 65_000,
+    "80000-120000": 100_000,
+    "120000-180000": 150_000,
+    "180000-250000": 215_000,
+    "250000+": 300_000,
+  };
+  return rangeMap[mileage] ?? 80_000;
 }
 
 interface EstimationResult {
@@ -67,14 +83,15 @@ export function calculateEstimation(input: EstimationInput): EstimationResult {
   const yearFactor = Math.max(0.2, 1 - age * 0.07);
 
   // Mileage factor: decrease value for high mileage
+  const mileageNum = parseMileage(input.mileage);
   const mileageFactor =
-    input.mileage < 50_000
+    mileageNum < 50_000
       ? 1.1
-      : input.mileage < 100_000
+      : mileageNum < 100_000
         ? 1.0
-        : input.mileage < 150_000
+        : mileageNum < 150_000
           ? 0.85
-          : input.mileage < 200_000
+          : mileageNum < 200_000
             ? 0.7
             : 0.55;
 

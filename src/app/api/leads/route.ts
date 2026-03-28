@@ -3,6 +3,16 @@ import { prisma } from "@/lib/db";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
+function parseMileageRange(mileage: string | number): number {
+  if (typeof mileage === "number") return mileage;
+  const map: Record<string, number> = {
+    "0-10000": 5000, "10000-30000": 20000, "30000-50000": 40000,
+    "50000-80000": 65000, "80000-120000": 100000, "120000-180000": 150000,
+    "180000-250000": 215000, "250000+": 300000,
+  };
+  return map[mileage] ?? (parseInt(mileage) || 80000);
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -55,7 +65,7 @@ export async function POST(req: NextRequest) {
             model: vehicleInfo.model,
             version: vehicleInfo.version || null,
             year: Number(vehicleInfo.year),
-            mileage: Number(vehicleInfo.mileage),
+            mileage: parseMileageRange(vehicleInfo.mileage),
             fuelType: vehicleInfo.fuelType,
             transmission: vehicleInfo.transmission,
             engineSize: vehicleInfo.engineSize || null,

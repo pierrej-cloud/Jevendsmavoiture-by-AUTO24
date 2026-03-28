@@ -10,11 +10,13 @@ import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import {
   CAR_BRANDS,
+  MODELS_BY_BRAND,
+  VERSION_I18N,
+  MILEAGE_RANGES_I18N,
   FUEL_TYPES_I18N,
   TRANSMISSION_I18N,
+  ENGINE_SIZES_I18N,
   COLOR_I18N,
-  ENGINE_SIZES,
-  ENGINE_SIZE_OTHER_I18N,
   CITIES_BY_COUNTRY,
   getI18nOptions,
 } from "@/lib/constants";
@@ -41,7 +43,7 @@ export function VehicleInfoStep({ onNext }: Props) {
       model: "",
       version: "",
       year: undefined as unknown as number,
-      mileage: undefined as unknown as number,
+      mileage: "",
       fuelType: undefined as unknown as VehicleInfoData["fuelType"],
       transmission: undefined as unknown as VehicleInfoData["transmission"],
       engineSize: "",
@@ -52,12 +54,11 @@ export function VehicleInfoStep({ onNext }: Props) {
     },
   });
 
+  const selectedBrand = watch("brand");
   const selectedCity = watch("city");
 
   const onSubmit = (data: VehicleInfoData) => {
-    // Inject country from global context
     const country = preselectedCountry || "";
-    // Resolve city: if "Other" was selected, use the custom city text
     const city = data.city === "__OTHER__" ? (data.customCity || "") : (data.city || "");
     funnelStore.setVehicleInfo({ ...data, country, city } as VehicleInfoData & { country: string });
     onNext();
@@ -69,18 +70,17 @@ export function VehicleInfoStep({ onNext }: Props) {
     label: String(currentYear - i),
   }));
 
-  // Build city options based on selected country
+  // Models based on selected brand
+  const otherLabel = locale === "fr" ? "Autre" : "Other";
+  const brandModels = selectedBrand && MODELS_BY_BRAND[selectedBrand]
+    ? [...MODELS_BY_BRAND[selectedBrand].map((m) => ({ value: m, label: m })), { value: "__OTHER__", label: otherLabel }]
+    : [{ value: "__OTHER__", label: otherLabel }];
+
+  // City options based on country
   const cityList = preselectedCountry ? CITIES_BY_COUNTRY[preselectedCountry] || [] : [];
-  const otherLabel = t.vehicle.other;
   const cityOptions = [
     ...cityList.map((c) => ({ value: c, label: c })),
     { value: "__OTHER__", label: otherLabel },
-  ];
-
-  // Engine size options
-  const engineOptions = [
-    ...ENGINE_SIZES.map((s) => ({ value: s, label: s })),
-    { value: "__OTHER__", label: ENGINE_SIZE_OTHER_I18N[locale] },
   ];
 
   return (
@@ -89,6 +89,7 @@ export function VehicleInfoStep({ onNext }: Props) {
       <p className="funnel-subtitle">{t.vehicle.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* Brand */}
         <div className="form-field">
           <Label>{t.vehicle.brand} *</Label>
           <Select
@@ -99,17 +100,28 @@ export function VehicleInfoStep({ onNext }: Props) {
           {errors.brand && <p className="form-error">{errors.brand.message}</p>}
         </div>
 
+        {/* Model — dynamic based on brand */}
         <div className="form-field">
           <Label>{t.vehicle.model} *</Label>
-          <Input {...register("model")} placeholder="e.g. Corolla, Civic, Golf" />
+          <Select
+            {...register("model")}
+            options={brandModels}
+            placeholder={t.vehicle.selectModel}
+          />
           {errors.model && <p className="form-error">{errors.model.message}</p>}
         </div>
 
+        {/* Version / Trim — optional */}
         <div className="form-field">
           <Label>{t.vehicle.version}</Label>
-          <Input {...register("version")} placeholder="e.g. SE, Sport, Limited" />
+          <Select
+            {...register("version")}
+            options={getI18nOptions(VERSION_I18N, locale)}
+            placeholder={t.vehicle.selectVersion}
+          />
         </div>
 
+        {/* Year + Mileage */}
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
             <Label>{t.vehicle.year} *</Label>
@@ -118,11 +130,16 @@ export function VehicleInfoStep({ onNext }: Props) {
           </div>
           <div className="form-field">
             <Label>{t.vehicle.mileage} *</Label>
-            <Input {...register("mileage")} type="number" placeholder="e.g. 80000" />
+            <Select
+              {...register("mileage")}
+              options={getI18nOptions(MILEAGE_RANGES_I18N, locale)}
+              placeholder={t.vehicle.selectMileage}
+            />
             {errors.mileage && <p className="form-error">{errors.mileage.message}</p>}
           </div>
         </div>
 
+        {/* Fuel type + Transmission */}
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
             <Label>{t.vehicle.fuelType} *</Label>
@@ -144,12 +161,13 @@ export function VehicleInfoStep({ onNext }: Props) {
           </div>
         </div>
 
+        {/* Engine size + Color */}
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
             <Label>{t.vehicle.engineSize}</Label>
             <Select
               {...register("engineSize")}
-              options={engineOptions}
+              options={getI18nOptions(ENGINE_SIZES_I18N, locale)}
               placeholder={t.vehicle.selectEngine}
             />
           </div>
@@ -163,6 +181,7 @@ export function VehicleInfoStep({ onNext }: Props) {
           </div>
         </div>
 
+        {/* Registration number — free text, optional */}
         <div className="form-field">
           <Label>{t.vehicle.registrationNo}</Label>
           <Input {...register("registrationNo")} placeholder={t.common.optional} />

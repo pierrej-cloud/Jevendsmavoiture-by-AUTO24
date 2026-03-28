@@ -8,7 +8,7 @@ export const vehicleInfoSchema = z.object({
     .number()
     .min(1990, "Year must be 1990 or later")
     .max(new Date().getFullYear() + 1, "Invalid year"),
-  mileage: z.coerce.number().min(0, "Mileage must be positive"),
+  mileage: z.string().min(1, "Mileage is required"),
   fuelType: z.enum(["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"]),
   transmission: z.enum(["MANUAL", "AUTOMATIC", "SEMI_AUTOMATIC"]),
   engineSize: z.string().optional(),
