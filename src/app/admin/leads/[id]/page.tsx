@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { LEAD_STATUSES } from "@/lib/constants";
 import { ArrowLeft, User, Car, Calendar, MapPin, MessageSquare, History, Image } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/language-context";
 
 interface LeadDetail {
   id: string;
@@ -56,6 +57,7 @@ interface LeadDetail {
 }
 
 export default function LeadDetailPage() {
+  const { t } = useLanguage();
   const params = useParams();
   const router = useRouter();
   const [lead, setLead] = useState<LeadDetail | null>(null);
@@ -108,11 +110,11 @@ export default function LeadDetailPage() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen text-neutral-medium">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen text-neutral-medium">{t.common.loading}</div>;
   }
 
   if (!lead) {
-    return <div className="flex items-center justify-center min-h-screen text-neutral-medium">Lead not found</div>;
+    return <div className="flex items-center justify-center min-h-screen text-neutral-medium">{t.admin.leadNotFound}</div>;
   }
 
   const statusInfo = LEAD_STATUSES.find((s) => s.value === lead.status);
@@ -124,11 +126,11 @@ export default function LeadDetailPage() {
           <Link href="/admin">
             <Button variant="ghost" size="sm">
               <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
+              {t.common.back}
             </Button>
           </Link>
           <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "32px", width: "auto", objectFit: "contain", display: "block" }} />
-          <h1 className="font-bold text-neutral-dark">Lead Detail</h1>
+          <h1 className="font-bold text-neutral-dark">{t.admin.leadDetail}</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>
       </header>
@@ -139,16 +141,16 @@ export default function LeadDetailPage() {
           <div className="bg-white rounded-xl shadow-card p-5">
             <div className="flex items-center gap-2 mb-4">
               <User className="w-5 h-5 text-primary" />
-              <h2 className="font-bold text-neutral-dark">Contact</h2>
+              <h2 className="font-bold text-neutral-dark">{t.admin.contact}</h2>
             </div>
             <div className="space-y-2 text-sm">
-              <p><span className="text-neutral-medium">Name:</span> {lead.firstName} {lead.lastName}</p>
-              <p><span className="text-neutral-medium">Email:</span> {lead.email}</p>
-              <p><span className="text-neutral-medium">Phone:</span> {lead.phone}</p>
-              {lead.whatsapp && <p><span className="text-neutral-medium">WhatsApp:</span> {lead.whatsapp}</p>}
+              <p><span className="text-neutral-medium">{t.admin.name}</span> {lead.firstName} {lead.lastName}</p>
+              <p><span className="text-neutral-medium">{t.admin.emailLabel}</span> {lead.email}</p>
+              <p><span className="text-neutral-medium">{t.admin.phoneLabel}</span> {lead.phone}</p>
+              {lead.whatsapp && <p><span className="text-neutral-medium">{t.admin.whatsappLabel}</span> {lead.whatsapp}</p>}
               {lead.estimateMin && lead.estimateMax && (
                 <p className="text-primary font-semibold">
-                  Estimate: {lead.estimateMin.toLocaleString()} - {lead.estimateMax.toLocaleString()} XOF
+                  {t.admin.estimate}: {lead.estimateMin.toLocaleString()} - {lead.estimateMax.toLocaleString()} XOF
                 </p>
               )}
             </div>
@@ -159,14 +161,14 @@ export default function LeadDetailPage() {
             <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Car className="w-5 h-5 text-primary" />
-                <h2 className="font-bold text-neutral-dark">Vehicle</h2>
+                <h2 className="font-bold text-neutral-dark">{t.admin.vehicle}</h2>
               </div>
               <div className="space-y-2 text-sm">
                 <p className="font-semibold">{lead.vehicle.brand} {lead.vehicle.model} {lead.vehicle.version || ""} {lead.vehicle.year}</p>
-                <p><span className="text-neutral-medium">Mileage:</span> {lead.vehicle.mileage.toLocaleString()} km</p>
-                <p><span className="text-neutral-medium">Fuel:</span> {lead.vehicle.fuelType} &middot; {lead.vehicle.transmission}</p>
-                {lead.vehicle.color && <p><span className="text-neutral-medium">Color:</span> {lead.vehicle.color}</p>}
-                <p><span className="text-neutral-medium">Location:</span> {lead.vehicle.city}, {lead.vehicle.country}</p>
+                <p><span className="text-neutral-medium">{t.admin.mileageLabel}</span> {lead.vehicle.mileage.toLocaleString()} km</p>
+                <p><span className="text-neutral-medium">{t.admin.fuelLabel}</span> {lead.vehicle.fuelType} &middot; {lead.vehicle.transmission}</p>
+                {lead.vehicle.color && <p><span className="text-neutral-medium">{t.admin.colorLabel}</span> {lead.vehicle.color}</p>}
+                <p><span className="text-neutral-medium">{t.admin.locationLabel}</span> {lead.vehicle.city}, {lead.vehicle.country}</p>
               </div>
             </div>
           )}
@@ -174,17 +176,17 @@ export default function LeadDetailPage() {
           {/* Condition */}
           {lead.vehicle?.condition && (
             <div className="bg-white rounded-xl shadow-card p-5">
-              <h2 className="font-bold text-neutral-dark mb-4">Condition</h2>
+              <h2 className="font-bold text-neutral-dark mb-4">{t.admin.conditionTitle}</h2>
               <div className="space-y-2 text-sm">
-                <p><span className="text-neutral-medium">General:</span> {lead.vehicle.condition.generalCondition}</p>
-                <p><span className="text-neutral-medium">Body:</span> {lead.vehicle.condition.bodyCondition}</p>
-                <p><span className="text-neutral-medium">Interior:</span> {lead.vehicle.condition.interiorCondition}</p>
-                <p><span className="text-neutral-medium">Accident:</span> {lead.vehicle.condition.accidentHistory ? "Yes" : "No"}</p>
-                <p><span className="text-neutral-medium">Mechanical issues:</span> {lead.vehicle.condition.mechanicalIssues ? "Yes" : "No"}</p>
-                <p><span className="text-neutral-medium">Drivable:</span> {lead.vehicle.condition.isDrivable ? "Yes" : "No"}</p>
-                <p><span className="text-neutral-medium">Owners:</span> {lead.vehicle.condition.previousOwners}</p>
+                <p><span className="text-neutral-medium">{t.admin.generalLabel}</span> {lead.vehicle.condition.generalCondition}</p>
+                <p><span className="text-neutral-medium">{t.admin.bodyLabel}</span> {lead.vehicle.condition.bodyCondition}</p>
+                <p><span className="text-neutral-medium">{t.admin.interiorLabel}</span> {lead.vehicle.condition.interiorCondition}</p>
+                <p><span className="text-neutral-medium">{t.admin.accidentLabel}</span> {lead.vehicle.condition.accidentHistory ? t.common.yes : t.common.no}</p>
+                <p><span className="text-neutral-medium">{t.admin.mechanicalLabel}</span> {lead.vehicle.condition.mechanicalIssues ? t.common.yes : t.common.no}</p>
+                <p><span className="text-neutral-medium">{t.admin.drivableLabel}</span> {lead.vehicle.condition.isDrivable ? t.common.yes : t.common.no}</p>
+                <p><span className="text-neutral-medium">{t.admin.ownersLabel}</span> {lead.vehicle.condition.previousOwners}</p>
                 {lead.vehicle.condition.comments && (
-                  <p><span className="text-neutral-medium">Comments:</span> {lead.vehicle.condition.comments}</p>
+                  <p><span className="text-neutral-medium">{t.admin.commentsLabel}</span> {lead.vehicle.condition.comments}</p>
                 )}
               </div>
             </div>
@@ -195,10 +197,10 @@ export default function LeadDetailPage() {
             <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Calendar className="w-5 h-5 text-primary" />
-                <h2 className="font-bold text-neutral-dark">Appointment</h2>
+                <h2 className="font-bold text-neutral-dark">{t.admin.appointmentTitle}</h2>
               </div>
               <div className="space-y-2 text-sm">
-                <p><span className="text-neutral-medium">Date:</span> {new Date(lead.appointment.date).toLocaleDateString()} at {lead.appointment.timeSlot}</p>
+                <p><span className="text-neutral-medium">{t.admin.dateLabel}</span> {new Date(lead.appointment.date).toLocaleDateString()} {t.common.at} {lead.appointment.timeSlot}</p>
                 {lead.appointment.showroom && (
                   <>
                     <p className="font-semibold">{lead.appointment.showroom.name}</p>
@@ -217,16 +219,12 @@ export default function LeadDetailPage() {
             <div className="bg-white rounded-xl shadow-card p-5 md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <Image className="w-5 h-5 text-primary" />
-                <h2 className="font-bold text-neutral-dark">Photos</h2>
+                <h2 className="font-bold text-neutral-dark">{t.admin.photos}</h2>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {lead.vehicle.photos.map((photo) => (
                   <div key={photo.id} className="relative">
-                    <img
-                      src={photo.url}
-                      alt={photo.category}
-                      className="w-full h-32 object-cover rounded-xl"
-                    />
+                    <img src={photo.url} alt={photo.category} className="w-full h-32 object-cover rounded-xl" />
                     <span className="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded">
                       {photo.category}
                     </span>
@@ -238,10 +236,10 @@ export default function LeadDetailPage() {
 
           {/* Update status / add note */}
           <div className="bg-white rounded-xl shadow-card p-5 md:col-span-2">
-            <h2 className="font-bold text-neutral-dark mb-4">Update Lead</h2>
+            <h2 className="font-bold text-neutral-dark mb-4">{t.admin.updateLead}</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-neutral-dark block mb-1.5">Status</label>
+                <label className="text-sm font-medium text-neutral-dark block mb-1.5">{t.admin.status}</label>
                 <Select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
@@ -249,18 +247,18 @@ export default function LeadDetailPage() {
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-neutral-dark block mb-1.5">Add note</label>
+                <label className="text-sm font-medium text-neutral-dark block mb-1.5">{t.admin.addNote}</label>
                 <Textarea
                   value={newNote}
                   onChange={(e) => setNewNote(e.target.value)}
-                  placeholder="Internal note..."
+                  placeholder={t.admin.notePlaceholder}
                   className="min-h-[80px]"
                 />
               </div>
             </div>
             <div className="mt-4">
               <Button onClick={handleUpdate} disabled={saving}>
-                {saving ? "Saving..." : "Update"}
+                {saving ? t.admin.saving : t.admin.update}
               </Button>
             </div>
           </div>
@@ -270,7 +268,7 @@ export default function LeadDetailPage() {
             <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-center gap-2 mb-4">
                 <MessageSquare className="w-5 h-5 text-primary" />
-                <h2 className="font-bold text-neutral-dark">Notes</h2>
+                <h2 className="font-bold text-neutral-dark">{t.admin.notes}</h2>
               </div>
               <div className="space-y-3">
                 {lead.notes.map((note) => (
@@ -290,7 +288,7 @@ export default function LeadDetailPage() {
             <div className="bg-white rounded-xl shadow-card p-5">
               <div className="flex items-center gap-2 mb-4">
                 <History className="w-5 h-5 text-primary" />
-                <h2 className="font-bold text-neutral-dark">Status History</h2>
+                <h2 className="font-bold text-neutral-dark">{t.admin.statusHistory}</h2>
               </div>
               <div className="space-y-2">
                 {lead.statusHistory.map((h) => (

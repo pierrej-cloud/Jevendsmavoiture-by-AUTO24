@@ -71,7 +71,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
                 {t.confirmation.appointmentDetails}
               </h3>
               <p className="font-semibold text-neutral-dark">
-                {appointment.date} at {appointment.timeSlot}
+                {appointment.date} {t.common.at} {appointment.timeSlot}
               </p>
             </div>
           )}

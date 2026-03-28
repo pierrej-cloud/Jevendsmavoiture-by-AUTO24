@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/i18n/language-context";
 
 export default function AdminLoginPage() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,10 +31,10 @@ export default function AdminLoginPage() {
         router.push("/admin");
       } else {
         const data = await res.json();
-        setError(data.error || "Invalid credentials");
+        setError(data.error || t.admin.invalidCredentials);
       }
     } catch {
-      setError("Login failed. Please try again.");
+      setError(t.admin.loginFailed);
     }
 
     setLoading(false);
@@ -45,13 +47,13 @@ export default function AdminLoginPage() {
           <div className="flex justify-center mb-3" style={{ overflow: "visible", alignItems: "center" }}>
             <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "56px", width: "auto", objectFit: "contain", display: "block" }} />
           </div>
-          <h1 className="text-xl font-bold text-neutral-dark">Admin Login</h1>
-          <p className="text-sm text-neutral-medium">Jevendsmavoiture Back-office</p>
+          <h1 className="text-xl font-bold text-neutral-dark">{t.admin.loginTitle}</h1>
+          <p className="text-sm text-neutral-medium">{t.admin.loginSubtitle}</p>
         </div>
 
         <form onSubmit={handleLogin} className="bg-white rounded-2xl shadow-card p-6 space-y-4">
           <div className="form-field">
-            <Label>Email</Label>
+            <Label>{t.admin.email}</Label>
             <Input
               type="email"
               value={email}
@@ -62,12 +64,12 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="form-field">
-            <Label>Password</Label>
+            <Label>{t.admin.password}</Label>
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
+              placeholder={t.admin.enterPassword}
               required
             />
           </div>
@@ -77,7 +79,7 @@ export default function AdminLoginPage() {
           )}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? t.admin.signingIn : t.admin.signIn}
           </Button>
         </form>
       </div>

@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { CONDITION_OPTIONS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/i18n/language-context";
 
@@ -18,29 +16,26 @@ interface Props {
   onBack: () => void;
 }
 
-function BooleanSelector({
+function TwoOptionSelector({
   value,
   onChange,
-  trueLabel,
-  falseLabel,
+  optionA,
+  optionB,
 }: {
   value: boolean;
   onChange: (val: boolean) => void;
-  trueLabel: string;
-  falseLabel: string;
+  optionA: { val: boolean; label: string };
+  optionB: { val: boolean; label: string };
 }) {
   return (
-    <div className="flex gap-2">
-      {[
-        { val: true, label: trueLabel },
-        { val: false, label: falseLabel },
-      ].map((opt) => (
+    <div className="flex flex-col gap-2">
+      {[optionA, optionB].map((opt) => (
         <button
           key={String(opt.val)}
           type="button"
           onClick={() => onChange(opt.val)}
           className={cn(
-            "flex-1 h-10 rounded-xl border-2 text-sm font-medium transition-all",
+            "w-full h-10 rounded-xl border-2 text-sm font-medium transition-all text-left px-4",
             value === opt.val
               ? "border-primary bg-primary/5 text-primary"
               : "border-gray-200 text-neutral-medium hover:border-gray-300"
@@ -56,7 +51,28 @@ function BooleanSelector({
 export function VehicleConditionStep({ onNext, onBack }: Props) {
   const { t } = useLanguage();
   const existing = funnelStore.getState().vehicleCondition;
-  const condOpts = CONDITION_OPTIONS.map((c) => ({ value: c.value, label: c.label }));
+
+  const conditionOptions = [
+    { value: "EXCELLENT", label: t.condition.conditionExcellent },
+    { value: "GOOD", label: t.condition.conditionGood },
+    { value: "FAIR", label: t.condition.conditionFair },
+    { value: "POOR", label: t.condition.conditionPoor },
+  ];
+
+  const maintenanceOptions = [
+    { value: "true", label: t.condition.maintenanceUpToDateOption },
+    { value: "partial", label: t.condition.maintenancePartial },
+    { value: "unknown", label: t.condition.maintenanceUnknown },
+    { value: "false", label: t.condition.maintenanceOverdue },
+  ];
+
+  const ownerOptions = [
+    { value: "1", label: t.condition.owners1 },
+    { value: "2", label: t.condition.owners2 },
+    { value: "3", label: t.condition.owners3 },
+    { value: "4", label: t.condition.owners4 },
+    { value: "5", label: t.condition.owners5 },
+  ];
 
   const {
     register,
@@ -90,8 +106,8 @@ export function VehicleConditionStep({ onNext, onBack }: Props) {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div className="form-field">
-          <Label>{t.condition.generalCondition} *</Label>
-          <Select {...register("generalCondition")} options={condOpts} />
+          <Label>{t.condition.generalCondition}</Label>
+          <Select {...register("generalCondition")} options={conditionOptions} placeholder={t.condition.selectCondition} />
           {errors.generalCondition && <p className="form-error">{errors.generalCondition.message}</p>}
         </div>
 
@@ -101,19 +117,24 @@ export function VehicleConditionStep({ onNext, onBack }: Props) {
             control={control}
             name="accidentHistory"
             render={({ field }) => (
-              <BooleanSelector value={field.value} onChange={field.onChange} trueLabel={t.common.yes} falseLabel={t.common.no} />
+              <TwoOptionSelector
+                value={field.value}
+                onChange={field.onChange}
+                optionA={{ val: true, label: t.condition.accidentYes }}
+                optionB={{ val: false, label: t.condition.accidentNo }}
+              />
             )}
           />
         </div>
 
         <div className="form-field">
-          <Label>{t.condition.bodyCondition} *</Label>
-          <Select {...register("bodyCondition")} options={condOpts} />
+          <Label>{t.condition.bodyCondition}</Label>
+          <Select {...register("bodyCondition")} options={conditionOptions} placeholder={t.condition.selectCondition} />
         </div>
 
         <div className="form-field">
-          <Label>{t.condition.interiorCondition} *</Label>
-          <Select {...register("interiorCondition")} options={condOpts} />
+          <Label>{t.condition.interiorCondition}</Label>
+          <Select {...register("interiorCondition")} options={conditionOptions} placeholder={t.condition.selectCondition} />
         </div>
 
         <div className="form-field">
@@ -122,19 +143,24 @@ export function VehicleConditionStep({ onNext, onBack }: Props) {
             control={control}
             name="mechanicalIssues"
             render={({ field }) => (
-              <BooleanSelector value={field.value} onChange={field.onChange} trueLabel={t.common.yes} falseLabel={t.common.no} />
+              <TwoOptionSelector
+                value={field.value}
+                onChange={field.onChange}
+                optionA={{ val: true, label: t.condition.mechanicalYes }}
+                optionB={{ val: false, label: t.condition.mechanicalNo }}
+              />
             )}
           />
         </div>
 
         <div className="form-field">
           <Label>{t.condition.maintenanceUpToDate}</Label>
-          <Controller
-            control={control}
-            name="maintenanceUpToDate"
-            render={({ field }) => (
-              <BooleanSelector value={field.value} onChange={field.onChange} trueLabel={t.common.yes} falseLabel={t.common.no} />
-            )}
+          <Select
+            {...register("maintenanceUpToDate", {
+              setValueAs: (v: string) => v === "true",
+            })}
+            options={maintenanceOptions}
+            placeholder={t.condition.selectCondition}
           />
         </div>
 
@@ -144,14 +170,23 @@ export function VehicleConditionStep({ onNext, onBack }: Props) {
             control={control}
             name="isDrivable"
             render={({ field }) => (
-              <BooleanSelector value={field.value} onChange={field.onChange} trueLabel={t.common.yes} falseLabel={t.common.no} />
+              <TwoOptionSelector
+                value={field.value}
+                onChange={field.onChange}
+                optionA={{ val: true, label: t.condition.drivableYes }}
+                optionB={{ val: false, label: t.condition.drivableNo }}
+              />
             )}
           />
         </div>
 
         <div className="form-field">
           <Label>{t.condition.previousOwners}</Label>
-          <Input {...register("previousOwners")} type="number" min={1} max={20} />
+          <Select
+            {...register("previousOwners")}
+            options={ownerOptions}
+            placeholder={t.condition.selectOwners}
+          />
         </div>
 
         <div className="form-field">

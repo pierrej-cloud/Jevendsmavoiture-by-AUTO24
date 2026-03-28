@@ -8,6 +8,7 @@ import { Select } from "@/components/ui/select";
 import { LEAD_STATUSES } from "@/lib/constants";
 import { LogOut, Eye, Car, Calendar, User } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/i18n/language-context";
 
 interface Lead {
   id: string;
@@ -33,6 +34,7 @@ interface Lead {
 }
 
 export default function AdminDashboard() {
+  const { t } = useLanguage();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [total, setTotal] = useState(0);
   const [statusFilter, setStatusFilter] = useState("");
@@ -76,12 +78,11 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      {/* Admin header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "32px", width: "auto", objectFit: "contain", display: "block" }} />
-            <h1 className="font-bold text-neutral-dark">Lead Management</h1>
+            <h1 className="font-bold text-neutral-dark">{t.admin.leadManagement}</h1>
           </div>
           <Button
             variant="ghost"
@@ -92,50 +93,45 @@ export default function AdminDashboard() {
             }}
           >
             <LogOut className="w-4 h-4 mr-1" />
-            Logout
+            {t.admin.logout}
           </Button>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white rounded-xl p-4 shadow-card">
-            <p className="text-xs text-neutral-medium">Total Leads</p>
+            <p className="text-xs text-neutral-medium">{t.admin.totalLeads}</p>
             <p className="text-2xl font-bold text-neutral-dark">{total}</p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-card">
-            <p className="text-xs text-neutral-medium">New</p>
+            <p className="text-xs text-neutral-medium">{t.admin.newLeads}</p>
             <p className="text-2xl font-bold text-primary">
               {leads.filter((l) => l.status === "NEW").length}
             </p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-card">
-            <p className="text-xs text-neutral-medium">Appointments</p>
+            <p className="text-xs text-neutral-medium">{t.admin.appointments}</p>
             <p className="text-2xl font-bold text-purple-600">
               {leads.filter((l) => l.status === "APPOINTMENT_BOOKED").length}
             </p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-card">
-            <p className="text-xs text-neutral-medium">Purchased</p>
+            <p className="text-xs text-neutral-medium">{t.admin.purchased}</p>
             <p className="text-2xl font-bold text-success">
               {leads.filter((l) => l.status === "PURCHASED").length}
             </p>
           </div>
         </div>
 
-        {/* Filter */}
         <div className="bg-white rounded-xl shadow-card p-4 mb-4">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-neutral-dark">Filter:</span>
+            <span className="text-sm font-medium text-neutral-dark">{t.admin.filter}</span>
             <Select
               value={statusFilter}
-              onChange={(e) => {
-                setStatusFilter(e.target.value);
-                setPage(1);
-              }}
+              onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
               options={[
-                { value: "", label: "All statuses" },
+                { value: "", label: t.admin.allStatuses },
                 ...LEAD_STATUSES.map((s) => ({ value: s.value, label: s.label })),
               ]}
               className="max-w-xs"
@@ -143,13 +139,12 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Leads table */}
         {loading ? (
-          <div className="text-center py-12 text-neutral-medium">Loading...</div>
+          <div className="text-center py-12 text-neutral-medium">{t.common.loading}</div>
         ) : leads.length === 0 ? (
           <div className="text-center py-12">
             <Car className="w-12 h-12 text-neutral-medium mx-auto mb-3" />
-            <p className="text-neutral-medium">No leads found</p>
+            <p className="text-neutral-medium">{t.admin.noLeadsFound}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -186,7 +181,7 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-1.5 text-xs text-neutral-medium">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>
-                        {new Date(lead.appointment.date).toLocaleDateString()} at {lead.appointment.timeSlot}
+                        {new Date(lead.appointment.date).toLocaleDateString()} {t.common.at} {lead.appointment.timeSlot}
                         {lead.appointment.showroom && ` - ${lead.appointment.showroom.name}`}
                       </span>
                     </div>
@@ -194,12 +189,12 @@ export default function AdminDashboard() {
 
                   {lead.estimateMin && lead.estimateMax && (
                     <p className="text-xs text-primary font-medium mt-1">
-                      Estimate: {lead.estimateMin.toLocaleString()} - {lead.estimateMax.toLocaleString()} XOF
+                      {t.admin.estimate}: {lead.estimateMin.toLocaleString()} - {lead.estimateMax.toLocaleString()} XOF
                     </p>
                   )}
 
                   <p className="text-[10px] text-neutral-medium mt-2">
-                    Created: {new Date(lead.createdAt).toLocaleString()}
+                    {t.admin.createdLabel} {new Date(lead.createdAt).toLocaleString()}
                   </p>
                 </div>
               </Link>
@@ -207,27 +202,16 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Pagination */}
         {total > 20 && (
           <div className="flex justify-center gap-2 mt-6">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page === 1}
-              onClick={() => setPage((p) => p - 1)}
-            >
-              Previous
+            <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+              {t.admin.previous}
             </Button>
             <span className="flex items-center text-sm text-neutral-medium px-3">
-              Page {page}
+              {t.admin.page} {page}
             </span>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={leads.length < 20}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              Next
+            <Button variant="outline" size="sm" disabled={leads.length < 20} onClick={() => setPage((p) => p + 1)}>
+              {t.common.next}
             </Button>
           </div>
         )}
