@@ -8,7 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { CAR_BRANDS, FUEL_TYPES, TRANSMISSIONS, COUNTRIES } from "@/lib/constants";
+import {
+  CAR_BRANDS,
+  FUEL_TYPES_I18N,
+  TRANSMISSION_I18N,
+  COLOR_I18N,
+  ENGINE_SIZES,
+  ENGINE_SIZE_OTHER_I18N,
+  CITIES_BY_COUNTRY,
+  getI18nOptions,
+} from "@/lib/constants";
 import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
@@ -16,12 +25,14 @@ interface Props {
 }
 
 export function VehicleInfoStep({ onNext }: Props) {
-  const { t, setLocaleFromCountry } = useLanguage();
+  const { t, locale } = useLanguage();
   const existing = funnelStore.getState().vehicleInfo;
   const preselectedCountry = funnelStore.getState().selectedCountry;
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<VehicleInfoData>({
     resolver: zodResolver(vehicleInfoSchema),
@@ -36,13 +47,19 @@ export function VehicleInfoStep({ onNext }: Props) {
       engineSize: "",
       color: "",
       registrationNo: "",
-      country: preselectedCountry || "",
       city: "",
+      customCity: "",
     },
   });
 
+  const selectedCity = watch("city");
+
   const onSubmit = (data: VehicleInfoData) => {
-    funnelStore.setVehicleInfo(data);
+    // Inject country from global context
+    const country = preselectedCountry || "";
+    // Resolve city: if "Other" was selected, use the custom city text
+    const city = data.city === "__OTHER__" ? (data.customCity || "") : (data.city || "");
+    funnelStore.setVehicleInfo({ ...data, country, city } as VehicleInfoData & { country: string });
     onNext();
   };
 
@@ -51,6 +68,20 @@ export function VehicleInfoStep({ onNext }: Props) {
     value: String(currentYear - i),
     label: String(currentYear - i),
   }));
+
+  // Build city options based on selected country
+  const cityList = preselectedCountry ? CITIES_BY_COUNTRY[preselectedCountry] || [] : [];
+  const otherLabel = t.vehicle.other;
+  const cityOptions = [
+    ...cityList.map((c) => ({ value: c, label: c })),
+    { value: "__OTHER__", label: otherLabel },
+  ];
+
+  // Engine size options
+  const engineOptions = [
+    ...ENGINE_SIZES.map((s) => ({ value: s, label: s })),
+    { value: "__OTHER__", label: ENGINE_SIZE_OTHER_I18N[locale] },
+  ];
 
   return (
     <div>
@@ -97,7 +128,7 @@ export function VehicleInfoStep({ onNext }: Props) {
             <Label>{t.vehicle.fuelType} *</Label>
             <Select
               {...register("fuelType")}
-              options={FUEL_TYPES.map((f) => ({ value: f.value, label: f.label }))}
+              options={getI18nOptions(FUEL_TYPES_I18N, locale)}
               placeholder={t.vehicle.selectFuelType}
             />
             {errors.fuelType && <p className="form-error">{errors.fuelType.message}</p>}
@@ -106,7 +137,7 @@ export function VehicleInfoStep({ onNext }: Props) {
             <Label>{t.vehicle.transmission} *</Label>
             <Select
               {...register("transmission")}
-              options={TRANSMISSIONS.map((tr) => ({ value: tr.value, label: tr.label }))}
+              options={getI18nOptions(TRANSMISSION_I18N, locale)}
               placeholder={t.vehicle.selectTransmission}
             />
             {errors.transmission && <p className="form-error">{errors.transmission.message}</p>}
@@ -116,11 +147,19 @@ export function VehicleInfoStep({ onNext }: Props) {
         <div className="grid grid-cols-2 gap-3">
           <div className="form-field">
             <Label>{t.vehicle.engineSize}</Label>
-            <Input {...register("engineSize")} placeholder="e.g. 1.6L" />
+            <Select
+              {...register("engineSize")}
+              options={engineOptions}
+              placeholder={t.vehicle.selectEngine}
+            />
           </div>
           <div className="form-field">
             <Label>{t.vehicle.color}</Label>
-            <Input {...register("color")} placeholder="e.g. Black" />
+            <Select
+              {...register("color")}
+              options={getI18nOptions(COLOR_I18N, locale)}
+              placeholder={t.vehicle.selectColor}
+            />
           </div>
         </div>
 
@@ -129,26 +168,22 @@ export function VehicleInfoStep({ onNext }: Props) {
           <Input {...register("registrationNo")} placeholder={t.common.optional} />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="form-field">
-            <Label>{t.vehicle.country} *</Label>
-            <Select
-              {...register("country", {
-                onChange: (e) => {
-                  setLocaleFromCountry(e.target.value);
-                },
-              })}
-              options={COUNTRIES.map((c) => ({ value: c.value, label: c.label }))}
-              placeholder={t.vehicle.selectCountry}
-            />
-            {errors.country && <p className="form-error">{errors.country.message}</p>}
-          </div>
-          <div className="form-field">
-            <Label>{t.vehicle.city} *</Label>
-            <Input {...register("city")} placeholder="e.g. Abidjan" />
-            {errors.city && <p className="form-error">{errors.city.message}</p>}
-          </div>
+        {/* City — smart dropdown based on country */}
+        <div className="form-field">
+          <Label>{t.vehicle.city}</Label>
+          <Select
+            {...register("city")}
+            options={cityOptions}
+            placeholder={t.vehicle.selectCity}
+          />
         </div>
+
+        {/* Custom city text field when "Other" is selected */}
+        {selectedCity === "__OTHER__" && (
+          <div className="form-field">
+            <Input {...register("customCity")} placeholder={t.vehicle.otherCity} />
+          </div>
+        )}
 
         <div className="pt-4">
           <Button type="submit" className="w-full" size="lg">

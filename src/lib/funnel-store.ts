@@ -53,8 +53,8 @@ export const funnelStore = {
     notify();
   },
 
-  setVehicleInfo: (data: VehicleInfoData) => {
-    state = { ...state, vehicleInfo: data };
+  setVehicleInfo: (data: VehicleInfoData & { country?: string }) => {
+    state = { ...state, vehicleInfo: data as VehicleInfoData };
     notify();
   },
 

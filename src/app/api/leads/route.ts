@@ -61,8 +61,8 @@ export async function POST(req: NextRequest) {
             engineSize: vehicleInfo.engineSize || null,
             color: vehicleInfo.color || null,
             registrationNo: vehicleInfo.registrationNo || null,
-            country: vehicleInfo.country,
-            city: vehicleInfo.city,
+            country: vehicleInfo.country || "",
+            city: vehicleInfo.city || "",
             condition: vehicleCondition
               ? {
                   create: {

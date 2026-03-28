@@ -10,12 +10,12 @@ export const vehicleInfoSchema = z.object({
     .max(new Date().getFullYear() + 1, "Invalid year"),
   mileage: z.coerce.number().min(0, "Mileage must be positive"),
   fuelType: z.enum(["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"]),
-  transmission: z.enum(["MANUAL", "AUTOMATIC"]),
+  transmission: z.enum(["MANUAL", "AUTOMATIC", "SEMI_AUTOMATIC"]),
   engineSize: z.string().optional(),
   color: z.string().optional(),
   registrationNo: z.string().optional(),
-  country: z.string().min(1, "Country is required"),
-  city: z.string().min(1, "City is required"),
+  city: z.string().optional(),
+  customCity: z.string().optional(),
 });
 
 export const vehicleConditionSchema = z.object({

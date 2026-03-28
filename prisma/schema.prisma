@@ -30,6 +30,7 @@ enum FuelType {
 enum TransmissionType {
   MANUAL
   AUTOMATIC
+  SEMI_AUTOMATIC
 }
 
 enum ConditionRating {
