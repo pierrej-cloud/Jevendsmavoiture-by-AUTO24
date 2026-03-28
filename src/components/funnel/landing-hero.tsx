@@ -70,15 +70,17 @@ export function LandingHero() {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center mb-10">
-          <Link href="/sell" aria-disabled={!selectedCountry} tabIndex={selectedCountry ? undefined : -1}>
-            <Button
-              size="lg"
-              className="w-full sm:w-auto"
-              disabled={!selectedCountry}
-            >
+          {selectedCountry ? (
+            <Link href="/sell">
+              <Button size="lg" className="w-full sm:w-auto">
+                {t.landing.ctaStart}
+              </Button>
+            </Link>
+          ) : (
+            <Button size="lg" className="w-full sm:w-auto" disabled>
               {t.landing.ctaStart}
             </Button>
-          </Link>
+          )}
           <a href="#how-it-works">
             <Button variant="outline" size="lg" className="w-full sm:w-auto">
               {t.landing.ctaHow}

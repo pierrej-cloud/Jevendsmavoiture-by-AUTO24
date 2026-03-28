@@ -6,6 +6,15 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Home, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
+import { MILEAGE_RANGES_I18N } from "@/lib/constants";
+import { Locale } from "@/i18n";
+
+function getMileageLabel(mileage: string | number | undefined, locale: Locale): string {
+  if (!mileage) return "";
+  if (typeof mileage === "number") return `${mileage.toLocaleString()} km`;
+  const range = MILEAGE_RANGES_I18N[mileage];
+  return range ? range[locale] : String(mileage);
+}
 
 interface Props {
   state: FunnelState;
@@ -13,7 +22,7 @@ interface Props {
 }
 
 export function ConfirmationScreen({ state, onReset }: Props) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { vehicleInfo, contactInfo, appointment, estimation } = state;
 
   return (
@@ -46,7 +55,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
                 {vehicleInfo.brand} {vehicleInfo.model} {vehicleInfo.year}
               </p>
               <p className="text-sm text-neutral-medium">
-                {vehicleInfo.mileage?.toLocaleString()} km &middot; {vehicleInfo.fuelType} &middot; {vehicleInfo.transmission}
+                {getMileageLabel(vehicleInfo.mileage, locale)} &middot; {vehicleInfo.fuelType} &middot; {vehicleInfo.transmission}
               </p>
             </div>
           )}

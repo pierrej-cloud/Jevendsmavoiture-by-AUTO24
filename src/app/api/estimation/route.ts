@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       brand: body.brand || "Other",
       model: body.model || "",
       year: Number(body.year) || 2020,
-      mileage: Number(body.mileage) || 50000,
+      mileage: body.mileage || "50000-80000",
       fuelType: body.fuelType || "PETROL",
       country: body.country || "CI",
       generalCondition: (body.generalCondition as ConditionRating) || "GOOD",
