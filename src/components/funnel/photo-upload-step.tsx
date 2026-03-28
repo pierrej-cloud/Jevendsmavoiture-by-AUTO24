@@ -66,13 +66,12 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
 
   const getPhotoForCategory = (cat: string) => photos.find((p) => p.category === cat);
 
-  const requiredPhotos = PHOTO_CATEGORIES.filter((c) => c.required);
-  const hasAllRequired = requiredPhotos.every((c) => getPhotoForCategory(c.id));
-
   const handleNext = () => {
     funnelStore.setPhotos(photos);
     onNext();
   };
+
+  const hasPhotos = photos.length > 0;
 
   return (
     <div>
@@ -96,7 +95,7 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
                     : "border-gray-200 text-neutral-medium hover:border-gray-300"
               )}
             >
-              {getPhotoLabel(cat.id)} {cat.required && !hasPhoto && "*"}
+              {getPhotoLabel(cat.id)}
               {hasPhoto && " ✓"}
             </button>
           );
@@ -147,7 +146,7 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-2 mb-6">
+      <div className="grid grid-cols-3 gap-2 mb-4">
         {PHOTO_CATEGORIES.map((cat) => {
           const photo = getPhotoForCategory(cat.id);
           return (
@@ -174,19 +173,18 @@ export function PhotoUploadStep({ onNext, onBack }: Props) {
         })}
       </div>
 
+      <p className="text-xs text-gray-400 text-center mb-6">
+        {t.photos.encouragement}
+      </p>
+
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1">
           {t.common.back}
         </Button>
-        <Button onClick={handleNext} className="flex-1" disabled={!hasAllRequired}>
-          {t.common.next}
+        <Button onClick={handleNext} className="flex-1">
+          {hasPhotos ? t.common.next : t.photos.continueWithout}
         </Button>
       </div>
-      {!hasAllRequired && (
-        <p className="text-xs text-neutral-medium text-center mt-2">
-          {t.common.requiredPhotosHint}
-        </p>
-      )}
     </div>
   );
 }

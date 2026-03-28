@@ -111,6 +111,8 @@ export const fr: TranslationKeys = {
     interior: "Intérieur",
     dashboard: "Tableau de bord",
     damage: "Dommages visibles",
+    encouragement: "Ajouter des photos améliore la précision de votre estimation, mais ce n'est pas obligatoire.",
+    continueWithout: "Continuer sans photo",
   },
   analysis: {
     title: "Analyse de votre véhicule",

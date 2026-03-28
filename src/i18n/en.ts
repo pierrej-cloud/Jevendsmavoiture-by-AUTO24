@@ -109,6 +109,8 @@ export const en = {
     interior: "Interior",
     dashboard: "Dashboard",
     damage: "Visible damage",
+    encouragement: "Adding photos improves your estimate accuracy, but it's not required.",
+    continueWithout: "Continue without photos",
   },
   analysis: {
     title: "Analyzing your vehicle",
