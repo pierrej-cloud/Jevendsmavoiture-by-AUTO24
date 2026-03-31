@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
 import { cn } from "@/lib/utils";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 export function Header() {
   const { locale, setLocale, t } = useLanguage();
@@ -11,7 +12,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 min-h-[56px]" style={{ overflow: "visible" }}>
       <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between" style={{ overflow: "visible" }}>
         <Link href="/" className="flex items-center gap-2" style={{ overflow: "visible", alignItems: "center" }}>
-          <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "36px", width: "auto", objectFit: "contain", display: "block" }} />
+          <Auto24Logo height={28} color="#185ADB" />
           <span className="text-sm">
             <span className="font-bold text-neutral-dark">{t.header.brandName}</span>
           </span>

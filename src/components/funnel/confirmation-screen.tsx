@@ -7,6 +7,7 @@ import { CheckCircle, Home, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
 import { MILEAGE_RANGES_I18N } from "@/lib/constants";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 import { Locale } from "@/i18n";
 
 function getMileageLabel(mileage: string | number | undefined, locale: Locale): string {
@@ -32,7 +33,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
         <div className="text-center mb-8">
           {/* AUTO24 Logo */}
           <div className="flex justify-center mb-4" style={{ overflow: "visible", alignItems: "center" }}>
-            <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "52px", width: "auto", objectFit: "contain", display: "block" }} />
+            <Auto24Logo height={36} color="#185ADB" />
           </div>
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-success" />

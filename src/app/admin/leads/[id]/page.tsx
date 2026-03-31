@@ -10,6 +10,7 @@ import { LEAD_STATUSES } from "@/lib/constants";
 import { ArrowLeft, User, Car, Calendar, MapPin, MessageSquare, History, Image } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 interface LeadDetail {
   id: string;
@@ -129,7 +130,7 @@ export default function LeadDetailPage() {
               {t.common.back}
             </Button>
           </Link>
-          <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "32px", width: "auto", objectFit: "contain", display: "block" }} />
+          <Auto24Logo height={24} color="#185ADB" />
           <h1 className="font-bold text-neutral-dark">{t.admin.leadDetail}</h1>
           {statusInfo && <Badge className={statusInfo.color}>{statusInfo.label}</Badge>}
         </div>

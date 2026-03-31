@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/i18n/language-context";
+import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 export default function AdminLoginPage() {
   const { t } = useLanguage();
@@ -44,8 +45,8 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-3" style={{ overflow: "visible", alignItems: "center" }}>
-            <img src="/logo-auto24.png" alt="AUTO24" style={{ height: "56px", width: "auto", objectFit: "contain", display: "block" }} />
+          <div className="flex justify-center mb-3">
+            <Auto24Logo height={44} color="#185ADB" />
           </div>
           <h1 className="text-xl font-bold text-neutral-dark">{t.admin.loginTitle}</h1>
           <p className="text-sm text-neutral-medium">{t.admin.loginSubtitle}</p>

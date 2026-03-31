@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description:
     "Sell your car in a few simple steps. Get an estimated value, book an inspection, and receive your final offer from AUTO24.",
   keywords: ["sell car", "AUTO24", "car valuation", "vehicle inspection", "Africa"],
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
