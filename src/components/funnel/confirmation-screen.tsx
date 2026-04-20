@@ -29,7 +29,7 @@ export function ConfirmationScreen({ state, onReset }: Props) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-8">
+      <main className="flex-1 max-w-[680px] mx-auto w-full px-4 py-8">
         <div className="text-center mb-8">
           {/* AUTO24 Logo */}
           <div className="flex justify-center mb-4" style={{ overflow: "visible", alignItems: "center" }}>
@@ -92,11 +92,11 @@ export function ConfirmationScreen({ state, onReset }: Props) {
                 {t.confirmation.contactDetails}
               </h3>
               <p className="font-semibold text-neutral-dark">
-                {contactInfo.firstName} {contactInfo.lastName}
+                {contactInfo.phonePrefix} {contactInfo.phoneNumber}
               </p>
-              <p className="text-sm text-neutral-medium">
-                {contactInfo.email} &middot; {contactInfo.phone}
-              </p>
+              {contactInfo.email && (
+                <p className="text-sm text-neutral-medium">{contactInfo.email}</p>
+              )}
             </div>
           )}
         </div>

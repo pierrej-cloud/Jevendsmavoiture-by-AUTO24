@@ -55,9 +55,9 @@ model Lead {
   status    LeadStatus @default(NEW)
 
   // Contact info
-  firstName   String
-  lastName    String
-  email       String
+  firstName   String  @default("")
+  lastName    String  @default("")
+  email       String  @default("")
   phone       String
   whatsapp    String?
 

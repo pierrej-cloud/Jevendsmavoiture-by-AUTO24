@@ -24,9 +24,10 @@ import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
+  onBack: () => void;
 }
 
-export function VehicleInfoStep({ onNext }: Props) {
+export function VehicleInfoStep({ onNext, onBack }: Props) {
   const { t, locale } = useLanguage();
   const existing = funnelStore.getState().vehicleInfo;
   const preselectedCountry = funnelStore.getState().selectedCountry;
@@ -204,8 +205,11 @@ export function VehicleInfoStep({ onNext }: Props) {
           </div>
         )}
 
-        <div className="pt-4">
-          <Button type="submit" className="w-full" size="lg">
+        <div className="flex gap-3 pt-4">
+          <Button type="button" variant="outline" onClick={onBack} className="flex-1">
+            {t.common.back}
+          </Button>
+          <Button type="submit" className="flex-1">
             {t.common.next}
           </Button>
         </div>

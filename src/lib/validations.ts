@@ -1,14 +1,29 @@
 import { z } from "zod";
 
+export const contactInfoSchema = z.object({
+  phonePrefix: z.string().min(1),
+  phoneNumber: z.string().min(6, "Invalid phone number"),
+  whatsappSame: z.boolean(),
+  whatsappPrefix: z.string().optional(),
+  whatsappNumber: z.string().optional(),
+  email: z.string().email("Invalid email").or(z.literal("")),
+  consentContact: z.literal(true, {
+    errorMap: () => ({ message: "Please accept the terms" }),
+  }),
+  consentPrivacy: z.literal(true, {
+    errorMap: () => ({ message: "Please accept the terms" }),
+  }),
+});
+
 export const vehicleInfoSchema = z.object({
-  brand: z.string().min(1, "Brand is required"),
-  model: z.string().min(1, "Model is required"),
+  brand: z.string().min(1, "This field is required"),
+  model: z.string().min(1, "This field is required"),
   version: z.string().optional(),
   year: z.coerce
     .number()
-    .min(1990, "Year must be 1990 or later")
-    .max(new Date().getFullYear() + 1, "Invalid year"),
-  mileage: z.string().min(1, "Mileage is required"),
+    .min(1990, "This field is required")
+    .max(new Date().getFullYear() + 1, "This field is required"),
+  mileage: z.string().min(1, "This field is required"),
   fuelType: z.enum(["PETROL", "DIESEL", "HYBRID", "ELECTRIC", "LPG", "OTHER"]),
   transmission: z.enum(["MANUAL", "AUTOMATIC", "SEMI_AUTOMATIC"]),
   engineSize: z.string().optional(),
@@ -30,27 +45,22 @@ export const vehicleConditionSchema = z.object({
   comments: z.string().optional(),
 });
 
-export const contactInfoSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(6, "Phone number is required"),
-  whatsapp: z.string().optional(),
-  consentContact: z.literal(true, {
-    errorMap: () => ({ message: "You must consent to be contacted" }),
-  }),
-  consentPrivacy: z.literal(true, {
-    errorMap: () => ({ message: "You must accept the privacy policy" }),
-  }),
+export const vehicleOptionsSchema = z.object({
+  keys: z.string().optional(),
+  serviceBook: z.string().optional(),
+  technicalInspection: z.string().optional(),
+  warranty: z.string().optional(),
+  accessories: z.array(z.string()),
 });
 
 export const appointmentSchema = z.object({
-  showroomId: z.string().min(1, "Please select a showroom"),
-  date: z.string().min(1, "Please select a date"),
-  timeSlot: z.string().min(1, "Please select a time slot"),
+  showroomId: z.string().min(1, "This field is required"),
+  date: z.string().min(1, "This field is required"),
+  timeSlot: z.string().min(1, "This field is required"),
 });
 
+export type ContactInfoData = z.infer<typeof contactInfoSchema>;
 export type VehicleInfoData = z.infer<typeof vehicleInfoSchema>;
 export type VehicleConditionData = z.infer<typeof vehicleConditionSchema>;
-export type ContactInfoData = z.infer<typeof contactInfoSchema>;
+export type VehicleOptionsData = z.infer<typeof vehicleOptionsSchema>;
 export type AppointmentData = z.infer<typeof appointmentSchema>;

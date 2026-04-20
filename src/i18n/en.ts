@@ -18,6 +18,10 @@ export const en = {
     dropPhotoHere: "Drop your photo here",
     at: "at",
     allRightsReserved: "All rights reserved.",
+    fieldRequired: "This field is required",
+    invalidEmail: "Invalid email",
+    invalidPhone: "Invalid phone number",
+    acceptTerms: "Please accept the terms",
   },
   header: {
     brandName: "SellYourCar",
@@ -25,8 +29,7 @@ export const en = {
   },
   landing: {
     heroTitle: "Sell your car in a few simple steps",
-    heroSubtitle:
-      "Get an estimated value, book an inspection, and receive your final offer from AUTO24.",
+    heroSubtitle: "Get an estimated value, book an inspection, and receive your final offer from AUTO24.",
     ctaStart: "Start now",
     ctaHow: "How it works",
     countryQuestion: "Which country are you in?",
@@ -61,6 +64,17 @@ export const en = {
       followUp: "Fast follow-up",
       followUpDesc: "Quick response and payment",
     },
+  },
+  contact: {
+    title: "Your contact details",
+    subtitle: "So we can get in touch with you",
+    phone: "Phone *",
+    phoneNumber: "Phone number",
+    whatsappSame: "This number is also my WhatsApp",
+    whatsapp: "WhatsApp number",
+    email: "Email (optional)",
+    consentContact: "I agree to be contacted by AUTO24 regarding my vehicle sale",
+    consentPrivacy: "I accept the privacy policy and terms of use",
   },
   vehicle: {
     title: "Tell us about your car",
@@ -124,6 +138,39 @@ export const en = {
     owners4: "4 owners",
     owners5: "5 or more",
   },
+  options: {
+    title: "Vehicle options",
+    subtitle: "Additional details about your vehicle",
+    keys: "Number of keys",
+    keys1: "1 key",
+    keys2: "2 keys",
+    keys3: "3 keys or more",
+    keysUnknown: "Unknown",
+    serviceBook: "Service book",
+    serviceComplete: "Complete",
+    servicePartial: "Partial",
+    serviceMissing: "Missing",
+    serviceUnknown: "Unknown",
+    technicalInspection: "Technical inspection",
+    inspectionValid: "Valid",
+    inspectionExpired: "Expired",
+    inspectionNotDone: "Not done",
+    inspectionNA: "Not applicable",
+    warranty: "Manufacturer warranty",
+    warrantyActive: "Active",
+    warrantyExpired: "Expired",
+    warrantyNone: "None",
+    accessories: "Accessories",
+    accAC: "Air conditioning",
+    accGPS: "GPS",
+    accSunroof: "Sunroof",
+    accLeather: "Leather seats",
+    accCamera: "Rear camera",
+    accAlloy: "Alloy wheels",
+    accTowBar: "Tow bar",
+    accTinted: "Tinted windows",
+    select: "Select...",
+  },
   photos: {
     title: "Upload photos",
     subtitle: "Add clear photos of your vehicle",
@@ -148,31 +195,19 @@ export const en = {
   estimation: {
     title: "Your estimated value",
     indicativeEstimate: "Indicative estimate",
-    disclaimer:
-      "This is an indicative estimate based on the information provided. The final offer will be confirmed after a physical inspection at our showroom.",
+    disclaimer: "This is an indicative estimate based on the information provided. The final offer will be confirmed after a physical inspection at our showroom.",
     range: "Estimated range",
     ctaPrimary: "Get my final offer",
     ctaSecondary: "Edit my information",
-    reassurance:
-      "Final offer confirmed after physical inspection in showroom",
+    reassurance: "Final offer confirmed after physical inspection in showroom",
     finalOfferAfterInspection: "Final offer after physical inspection",
-  },
-  contact: {
-    title: "Your contact details",
-    subtitle: "So we can get in touch with you",
-    firstName: "First name",
-    lastName: "Last name",
-    email: "Email",
-    phone: "Phone",
-    whatsapp: "WhatsApp number",
-    consentContact: "I agree to be contacted by AUTO24 regarding my vehicle sale",
-    consentPrivacy: "I accept the privacy policy and terms of use",
   },
   showroom: {
     title: "Choose a showroom",
     subtitle: "Select the AUTO24 showroom nearest to you",
     openingHours: "Opening hours",
     preselected: "Your nearest AUTO24 showroom has been pre-selected.",
+    viewOnMaps: "View on Google Maps",
   },
   appointment: {
     title: "Book your appointment",
@@ -250,7 +285,6 @@ export const en = {
   },
 };
 
-// Recursive type that widens string literals to string
 type DeepStringify<T> = {
   [K in keyof T]: T[K] extends string ? string : DeepStringify<T[K]>;
 };

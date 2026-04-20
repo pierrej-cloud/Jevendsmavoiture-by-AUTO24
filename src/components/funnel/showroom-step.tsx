@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { funnelStore } from "@/lib/funnel-store";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, CheckCircle } from "lucide-react";
+import { MapPin, Clock, CheckCircle, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/i18n/language-context";
 
@@ -105,10 +105,21 @@ export function ShowroomStep({ onNext, onBack }: Props) {
               <MapPin className="w-3.5 h-3.5" />
               <span>{s.address}, {s.city}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-neutral-medium">
+            <div className="flex items-center gap-1.5 text-xs text-neutral-medium mb-1">
               <Clock className="w-3.5 h-3.5" />
               <span>{s.openingHours}</span>
             </div>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address + ", " + s.city)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1 text-xs text-primary font-medium hover:underline mt-1"
+            >
+              <MapPin className="w-3 h-3" />
+              {t.showroom.viewOnMaps}
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </button>
         ))}
       </div>

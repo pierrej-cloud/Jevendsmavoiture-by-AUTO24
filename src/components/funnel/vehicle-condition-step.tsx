@@ -82,14 +82,14 @@ export function VehicleConditionStep({ onNext, onBack }: Props) {
   } = useForm<VehicleConditionData>({
     resolver: zodResolver(vehicleConditionSchema),
     defaultValues: existing || {
-      generalCondition: "GOOD" as VehicleConditionData["generalCondition"],
+      generalCondition: undefined as unknown as VehicleConditionData["generalCondition"],
       accidentHistory: false,
-      bodyCondition: "GOOD" as VehicleConditionData["bodyCondition"],
-      interiorCondition: "GOOD" as VehicleConditionData["interiorCondition"],
+      bodyCondition: undefined as unknown as VehicleConditionData["bodyCondition"],
+      interiorCondition: undefined as unknown as VehicleConditionData["interiorCondition"],
       mechanicalIssues: false,
-      maintenanceUpToDate: true,
+      maintenanceUpToDate: false,
       isDrivable: true,
-      previousOwners: 1,
+      previousOwners: undefined as unknown as number,
       comments: "",
     },
   });

@@ -13,10 +13,10 @@ export function FunnelLayout({ children, currentStep, totalSteps }: FunnelLayout
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <div className="max-w-lg mx-auto w-full px-4 pt-4">
+      <div className="max-w-[680px] mx-auto w-full px-4 pt-4">
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       </div>
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-6">
+      <main className="flex-1 max-w-[680px] mx-auto w-full px-4 py-6">
         {children}
       </main>
     </div>

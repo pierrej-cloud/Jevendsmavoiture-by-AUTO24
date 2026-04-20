@@ -49,11 +49,13 @@ export async function POST(req: NextRequest) {
     // Create lead with all relations
     const lead = await prisma.lead.create({
       data: {
-        firstName: contactInfo.firstName,
-        lastName: contactInfo.lastName,
-        email: contactInfo.email,
-        phone: contactInfo.phone,
-        whatsapp: contactInfo.whatsapp || null,
+        firstName: contactInfo.firstName || "",
+        lastName: contactInfo.lastName || "",
+        email: contactInfo.email || "",
+        phone: (contactInfo.phonePrefix || "") + (contactInfo.phoneNumber || contactInfo.phone || ""),
+        whatsapp: contactInfo.whatsappSame === false
+          ? (contactInfo.whatsappPrefix || "") + (contactInfo.whatsappNumber || "")
+          : (contactInfo.phonePrefix || "") + (contactInfo.phoneNumber || contactInfo.phone || ""),
         consentContact: contactInfo.consentContact,
         consentPrivacy: contactInfo.consentPrivacy,
         estimateMin: estimation?.min || null,

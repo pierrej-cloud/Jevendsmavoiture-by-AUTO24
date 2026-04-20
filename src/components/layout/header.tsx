@@ -9,9 +9,9 @@ export function Header() {
   const { locale, setLocale, t } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 min-h-[56px]" style={{ overflow: "visible" }}>
-      <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between" style={{ overflow: "visible" }}>
-        <Link href="/" className="flex items-center gap-2" style={{ overflow: "visible", alignItems: "center" }}>
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 min-h-[56px]">
+      <div className="max-w-[680px] mx-auto px-4 h-14 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
           <Auto24Logo height={28} color="#185ADB" />
           <span className="text-sm">
             <span className="font-bold text-neutral-dark">{t.header.brandName}</span>

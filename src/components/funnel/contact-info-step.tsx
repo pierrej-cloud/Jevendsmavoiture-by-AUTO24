@@ -6,33 +6,41 @@ import { contactInfoSchema, ContactInfoData } from "@/lib/validations";
 import { funnelStore } from "@/lib/funnel-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { ALL_PHONE_PREFIXES, PHONE_PREFIXES } from "@/lib/constants";
 import { useLanguage } from "@/i18n/language-context";
 
 interface Props {
   onNext: () => void;
-  onBack: () => void;
 }
 
-export function ContactInfoStep({ onNext, onBack }: Props) {
+export function ContactInfoStep({ onNext }: Props) {
   const { t } = useLanguage();
   const existing = funnelStore.getState().contactInfo;
+  const country = funnelStore.getState().selectedCountry;
+  const defaultPrefix = country && PHONE_PREFIXES[country] ? PHONE_PREFIXES[country].prefix : "+212";
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ContactInfoData>({
     resolver: zodResolver(contactInfoSchema),
     defaultValues: existing || {
-      firstName: "",
-      lastName: "",
+      phonePrefix: defaultPrefix,
+      phoneNumber: "",
+      whatsappSame: true,
+      whatsappPrefix: defaultPrefix,
+      whatsappNumber: "",
       email: "",
-      phone: "",
-      whatsapp: "",
       consentContact: false as unknown as true,
       consentPrivacy: false as unknown as true,
     },
   });
+
+  const whatsappSame = watch("whatsappSame");
 
   const onSubmit = (data: ContactInfoData) => {
     funnelStore.setContactInfo(data);
@@ -45,36 +53,65 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
       <p className="funnel-subtitle">{t.contact.subtitle}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div className="form-field">
-            <Label>{t.contact.firstName} *</Label>
-            <Input {...register("firstName")} placeholder="John" />
-            {errors.firstName && <p className="form-error">{errors.firstName.message}</p>}
+        {/* Phone with prefix */}
+        <div className="form-field">
+          <Label>{t.contact.phone}</Label>
+          <div className="flex gap-2">
+            <div className="w-28 flex-shrink-0">
+              <Select
+                {...register("phonePrefix")}
+                options={ALL_PHONE_PREFIXES}
+              />
+            </div>
+            <Input
+              {...register("phoneNumber")}
+              type="tel"
+              placeholder={t.contact.phoneNumber}
+              className="flex-1"
+            />
           </div>
+          {errors.phoneNumber && <p className="form-error">{t.common.invalidPhone}</p>}
+        </div>
+
+        {/* WhatsApp same checkbox */}
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            {...register("whatsappSame")}
+            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+          />
+          <span className="text-sm text-neutral-dark">{t.contact.whatsappSame}</span>
+        </label>
+
+        {/* WhatsApp separate field */}
+        {!whatsappSame && (
           <div className="form-field">
-            <Label>{t.contact.lastName} *</Label>
-            <Input {...register("lastName")} placeholder="Doe" />
-            {errors.lastName && <p className="form-error">{errors.lastName.message}</p>}
+            <Label>{t.contact.whatsapp}</Label>
+            <div className="flex gap-2">
+              <div className="w-28 flex-shrink-0">
+                <Select
+                  {...register("whatsappPrefix")}
+                  options={ALL_PHONE_PREFIXES}
+                />
+              </div>
+              <Input
+                {...register("whatsappNumber")}
+                type="tel"
+                placeholder={t.contact.phoneNumber}
+                className="flex-1"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
+        {/* Email optional */}
         <div className="form-field">
-          <Label>{t.contact.email} *</Label>
-          <Input {...register("email")} type="email" placeholder="john@example.com" />
-          {errors.email && <p className="form-error">{errors.email.message}</p>}
+          <Label>{t.contact.email}</Label>
+          <Input {...register("email")} type="email" placeholder="email@example.com" />
+          {errors.email && <p className="form-error">{t.common.invalidEmail}</p>}
         </div>
 
-        <div className="form-field">
-          <Label>{t.contact.phone} *</Label>
-          <Input {...register("phone")} type="tel" placeholder="+225 07 XX XX XX" />
-          {errors.phone && <p className="form-error">{errors.phone.message}</p>}
-        </div>
-
-        <div className="form-field">
-          <Label>{t.contact.whatsapp}</Label>
-          <Input {...register("whatsapp")} type="tel" />
-        </div>
-
+        {/* Consent */}
         <div className="space-y-3 pt-2">
           <label className="flex items-start gap-3 cursor-pointer">
             <input
@@ -82,11 +119,9 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
               {...register("consentContact")}
               className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
-            <span className="text-xs text-neutral-medium">
-              {t.contact.consentContact} *
-            </span>
+            <span className="text-xs text-neutral-medium">{t.contact.consentContact} *</span>
           </label>
-          {errors.consentContact && <p className="form-error">{errors.consentContact.message}</p>}
+          {errors.consentContact && <p className="form-error">{t.common.acceptTerms}</p>}
 
           <label className="flex items-start gap-3 cursor-pointer">
             <input
@@ -94,18 +129,13 @@ export function ContactInfoStep({ onNext, onBack }: Props) {
               {...register("consentPrivacy")}
               className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
-            <span className="text-xs text-neutral-medium">
-              {t.contact.consentPrivacy} *
-            </span>
+            <span className="text-xs text-neutral-medium">{t.contact.consentPrivacy} *</span>
           </label>
-          {errors.consentPrivacy && <p className="form-error">{errors.consentPrivacy.message}</p>}
+          {errors.consentPrivacy && <p className="form-error">{t.common.acceptTerms}</p>}
         </div>
 
-        <div className="flex gap-3 pt-4">
-          <Button type="button" variant="outline" onClick={onBack} className="flex-1">
-            {t.common.back}
-          </Button>
-          <Button type="submit" className="flex-1">
+        <div className="pt-4">
+          <Button type="submit" className="w-full" size="lg">
             {t.common.next}
           </Button>
         </div>

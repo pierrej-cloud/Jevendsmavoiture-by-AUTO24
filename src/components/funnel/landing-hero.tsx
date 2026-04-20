@@ -37,7 +37,7 @@ export function LandingHero() {
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
 
-      <div className="relative max-w-lg mx-auto px-4 pt-12 pb-8 text-center">
+      <div className="relative max-w-[680px] mx-auto px-4 pt-12 pb-8 text-center">
         {/* Logo */}
         <div className="flex justify-center mb-4" style={{ overflow: "visible", alignItems: "center" }}>
           <Auto24Logo height={40} color="#185ADB" />

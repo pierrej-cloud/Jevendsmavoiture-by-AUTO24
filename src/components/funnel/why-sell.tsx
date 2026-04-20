@@ -15,7 +15,7 @@ export function WhySellSection() {
 
   return (
     <section className="py-12 bg-background">
-      <div className="max-w-lg mx-auto px-4">
+      <div className="max-w-[680px] mx-auto px-4">
         <h2 className="text-2xl font-bold text-center text-neutral-dark mb-8">
           {t.landing.whySell.title}
         </h2>

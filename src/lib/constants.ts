@@ -96,6 +96,22 @@ export const COLOR_I18N: Record<string, { en: string; fr: string }> = {
   OTHER:  { en: "Other",  fr: "Autre" },
 };
 
+export const PHONE_PREFIXES: Record<string, { prefix: string; flag: string }> = {
+  MA: { prefix: "+212", flag: "🇲🇦" },
+  SN: { prefix: "+221", flag: "🇸🇳" },
+  CI: { prefix: "+225", flag: "🇨🇮" },
+  ZA: { prefix: "+27",  flag: "🇿🇦" },
+  RW: { prefix: "+250", flag: "🇷🇼" },
+};
+
+export const ALL_PHONE_PREFIXES = [
+  { value: "+212", label: "🇲🇦 +212" },
+  { value: "+221", label: "🇸🇳 +221" },
+  { value: "+225", label: "🇨🇮 +225" },
+  { value: "+27",  label: "🇿🇦 +27" },
+  { value: "+250", label: "🇷🇼 +250" },
+];
+
 export const COLOR_SWATCHES: Record<string, string> = {
   WHITE: "#FFFFFF", BLACK: "#000000", GREY: "#808080", SILVER: "#C0C0C0",
   BLUE: "#2563EB", RED: "#DC2626", GREEN: "#16A34A", BROWN: "#92400E",

@@ -1,6 +1,6 @@
 "use client";
 
-import { VehicleInfoData, VehicleConditionData, ContactInfoData, AppointmentData } from "./validations";
+import { VehicleInfoData, VehicleConditionData, VehicleOptionsData, ContactInfoData, AppointmentData } from "./validations";
 
 export interface PhotoFile {
   category: string;
@@ -10,27 +10,28 @@ export interface PhotoFile {
 
 export interface FunnelState {
   selectedCountry: string | null;
+  contactInfo: ContactInfoData | null;
   vehicleInfo: VehicleInfoData | null;
   vehicleCondition: VehicleConditionData | null;
+  vehicleOptions: VehicleOptionsData | null;
   photos: PhotoFile[];
   estimation: { min: number; max: number; currency: string } | null;
-  contactInfo: ContactInfoData | null;
   appointment: AppointmentData | null;
   leadId: string | null;
 }
 
 const INITIAL_STATE: FunnelState = {
   selectedCountry: null,
+  contactInfo: null,
   vehicleInfo: null,
   vehicleCondition: null,
+  vehicleOptions: null,
   photos: [],
   estimation: null,
-  contactInfo: null,
   appointment: null,
   leadId: null,
 };
 
-// Simple in-memory store for the funnel (single page session)
 let state: FunnelState = { ...INITIAL_STATE };
 let listeners: (() => void)[] = [];
 
@@ -53,6 +54,11 @@ export const funnelStore = {
     notify();
   },
 
+  setContactInfo: (data: ContactInfoData) => {
+    state = { ...state, contactInfo: data };
+    notify();
+  },
+
   setVehicleInfo: (data: VehicleInfoData & { country?: string }) => {
     state = { ...state, vehicleInfo: data as VehicleInfoData };
     notify();
@@ -63,6 +69,11 @@ export const funnelStore = {
     notify();
   },
 
+  setVehicleOptions: (data: VehicleOptionsData) => {
+    state = { ...state, vehicleOptions: data };
+    notify();
+  },
+
   setPhotos: (photos: PhotoFile[]) => {
     state = { ...state, photos };
     notify();
@@ -70,11 +81,6 @@ export const funnelStore = {
 
   setEstimation: (estimation: FunnelState["estimation"]) => {
     state = { ...state, estimation };
-    notify();
-  },
-
-  setContactInfo: (data: ContactInfoData) => {
-    state = { ...state, contactInfo: data };
     notify();
   },
 
