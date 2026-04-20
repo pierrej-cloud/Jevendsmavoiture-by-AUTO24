@@ -114,7 +114,7 @@ export const ALL_PHONE_PREFIXES = [
 
 export const COLOR_SWATCHES: Record<string, string> = {
   WHITE: "#FFFFFF", BLACK: "#000000", GREY: "#808080", SILVER: "#C0C0C0",
-  BLUE: "#2563EB", RED: "#DC2626", GREEN: "#16A34A", BROWN: "#92400E",
+  BLUE: "#185ADB", RED: "#DC2626", GREEN: "#16A34A", BROWN: "#92400E",
   BEIGE: "#D4B896", ORANGE: "#EA580C", OTHER: "",
 };
 
@@ -185,7 +185,7 @@ export const TIME_SLOTS = [
 ] as const;
 
 export const LEAD_STATUSES = [
-  { value: "NEW", label: "New", color: "bg-blue-100 text-blue-700" },
+  { value: "NEW", label: "New", color: "bg-primary-50 text-primary" },
   { value: "CONTACTED", label: "Contacted", color: "bg-yellow-100 text-yellow-700" },
   { value: "APPOINTMENT_BOOKED", label: "Appointment Booked", color: "bg-purple-100 text-purple-700" },
   { value: "INSPECTED", label: "Inspected", color: "bg-indigo-100 text-indigo-700" },
