@@ -184,6 +184,11 @@ export const en = {
     damage: "Visible damage",
     encouragement: "Adding photos improves your estimate accuracy, but it's not required.",
     continueWithout: "Continue without photos",
+    aiAnalyzing: "AI analysis in progress...",
+    aiDetected: "Our AI detected:",
+    aiPrefill: "Would you like to pre-fill the form?",
+    aiYes: "Yes, pre-fill",
+    aiNo: "No thanks",
   },
   analysis: {
     title: "Analyzing your vehicle",
@@ -201,6 +206,10 @@ export const en = {
     ctaSecondary: "Edit my information",
     reassurance: "Final offer confirmed after physical inspection in showroom",
     finalOfferAfterInspection: "Final offer after physical inspection",
+    aiReportTitle: "Your vehicle analysis",
+    aiReportLoading: "Generating your personalized report...",
+    aiStrengths: "Vehicle strengths",
+    aiTip: "Tip for sellers",
   },
   showroom: {
     title: "Choose a showroom",

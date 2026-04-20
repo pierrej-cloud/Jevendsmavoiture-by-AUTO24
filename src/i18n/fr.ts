@@ -186,6 +186,11 @@ export const fr: TranslationKeys = {
     damage: "Dommages visibles",
     encouragement: "Ajouter des photos améliore la précision de votre estimation, mais ce n'est pas obligatoire.",
     continueWithout: "Continuer sans photo",
+    aiAnalyzing: "Analyse IA en cours...",
+    aiDetected: "Notre IA a détecté :",
+    aiPrefill: "Voulez-vous pré-remplir le formulaire ?",
+    aiYes: "Oui, pré-remplir",
+    aiNo: "Non merci",
   },
   analysis: {
     title: "Analyse de votre véhicule",
@@ -203,6 +208,10 @@ export const fr: TranslationKeys = {
     ctaSecondary: "Modifier mes informations",
     reassurance: "Offre finale confirmée après inspection physique en showroom",
     finalOfferAfterInspection: "Offre finale après inspection physique",
+    aiReportTitle: "Analyse de votre véhicule",
+    aiReportLoading: "Génération de votre rapport personnalisé...",
+    aiStrengths: "Points forts du véhicule",
+    aiTip: "Conseil pour les vendeurs",
   },
   showroom: {
     title: "Choisissez un showroom",
