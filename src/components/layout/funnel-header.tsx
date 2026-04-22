@@ -16,11 +16,28 @@ export function FunnelHeader() {
   if (!country || !VALID_COUNTRIES.includes(country)) return null;
 
   return (
-    <header style={{ position: "sticky", top: 0, zIndex: 50, width: "100%" }}>
+    <header
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        background: "#185ADB",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "10px 16px",
+        width: "100%",
+      }}
+    >
       <img
         src={`/branding/header-${country.toLowerCase()}.png`}
         alt=""
-        style={{ width: "100%", height: "auto", display: "block", maxHeight: 80 }}
+        style={{
+          height: 52,
+          width: "auto",
+          objectFit: "contain",
+          display: "block",
+        }}
       />
     </header>
   );
