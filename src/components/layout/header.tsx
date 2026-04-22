@@ -74,14 +74,15 @@ export function Header() {
   const headerStyle: React.CSSProperties = branding
     ? {
         backgroundImage: `url('${branding.header}')`,
-        backgroundSize: "cover",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundColor: "#185ADB",
       }
     : { backgroundColor: "#185ADB" };
 
   return (
-    <header className="sticky top-0 z-50 min-h-[56px]" style={headerStyle}>
+    <header className="sticky top-0 z-50 h-[56px]" style={headerStyle}>
       <div className="max-w-[680px] mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {branding ? (
