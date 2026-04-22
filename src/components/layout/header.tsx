@@ -10,14 +10,41 @@ import { funnelStore } from "@/lib/funnel-store";
 interface CountryBranding {
   domain: string;
   title: string;
+  logo: string;
+  header: string;
 }
 
 const COUNTRY_BRANDING: Record<string, CountryBranding> = {
-  CI: { domain: "vendezvotrevoiture.ci",    title: "VendezVotreVoiture.ci | par AUTO24" },
-  MA: { domain: "vendezvotrevoiture.ma",    title: "VendezVotreVoiture.ma | par AUTO24" },
-  SN: { domain: "vendezvotrevoiture.sn",    title: "VendezVotreVoiture.sn | par AUTO24" },
-  RW: { domain: "sellmycar.rw",             title: "SellMyCar.rw | by AUTO24" },
-  ZA: { domain: "sellmycarcash.co.za",      title: "SellMyCarCash.co.za | by AUTO24" },
+  CI: {
+    domain: "vendezvotrevoiture.ci",
+    title: "VendezVotreVoiture.ci | par AUTO24",
+    logo: "/branding/logo-ci.svg",
+    header: "/branding/header-ci.png",
+  },
+  MA: {
+    domain: "vendezvotrevoiture.ma",
+    title: "VendezVotreVoiture.ma | par AUTO24",
+    logo: "/branding/logo-ma.svg",
+    header: "/branding/header-ma.png",
+  },
+  SN: {
+    domain: "vendezvotrevoiture.sn",
+    title: "VendezVotreVoiture.sn | par AUTO24",
+    logo: "/branding/logo-sn.svg",
+    header: "/branding/header-sn.png",
+  },
+  RW: {
+    domain: "sellmycar.rw",
+    title: "SellMyCar.rw | by AUTO24",
+    logo: "/branding/logo-rw.svg",
+    header: "/branding/header-rw.png",
+  },
+  ZA: {
+    domain: "sellmycarcash.co.za",
+    title: "SellMyCarCash.co.za | by AUTO24",
+    logo: "/branding/logo-za.svg",
+    header: "/branding/header-za.png",
+  },
 };
 
 const FALLBACK_DOMAIN = "jevendsmavoiturebyauto24.up.railway.app";
@@ -44,14 +71,28 @@ export function Header() {
     }
   }, [title]);
 
+  const headerStyle: React.CSSProperties = branding
+    ? {
+        backgroundImage: `url('${branding.header}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundColor: "#185ADB",
+      }
+    : { backgroundColor: "#185ADB" };
+
   return (
-    <header
-      className="sticky top-0 z-50 min-h-[56px]"
-      style={{ backgroundColor: "#185ADB" }}
-    >
+    <header className="sticky top-0 z-50 min-h-[56px]" style={headerStyle}>
       <div className="max-w-[680px] mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Auto24Logo height={24} color="#FFFFFF" />
+          {branding ? (
+            <img
+              src={branding.logo}
+              alt={domain}
+              style={{ height: "24px", width: "auto", objectFit: "contain", display: "block" }}
+            />
+          ) : (
+            <Auto24Logo height={24} color="#FFFFFF" />
+          )}
           <div className="flex flex-col leading-tight">
             <span className="text-white font-bold text-[15px]">{domain}</span>
             <span className="text-white text-[11px]" style={{ opacity: 0.7 }}>
@@ -67,9 +108,7 @@ export function Header() {
             onClick={() => setLocale("fr")}
             className={cn(
               "px-3 py-1 text-xs font-semibold transition-all",
-              locale === "fr"
-                ? "bg-white"
-                : "bg-transparent hover:bg-white/10"
+              locale === "fr" ? "bg-white" : "bg-transparent hover:bg-white/10"
             )}
             style={{
               borderRadius: "20px",
@@ -83,9 +122,7 @@ export function Header() {
             onClick={() => setLocale("en")}
             className={cn(
               "px-3 py-1 text-xs font-semibold transition-all",
-              locale === "en"
-                ? "bg-white"
-                : "bg-transparent hover:bg-white/10"
+              locale === "en" ? "bg-white" : "bg-transparent hover:bg-white/10"
             )}
             style={{
               borderRadius: "20px",
