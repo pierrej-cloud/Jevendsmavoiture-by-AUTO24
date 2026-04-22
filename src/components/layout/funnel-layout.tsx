@@ -1,6 +1,6 @@
 "use client";
 
-import { Header } from "./header";
+import { FunnelHeader } from "./funnel-header";
 import { ProgressBar } from "../ui/progress-bar";
 
 interface FunnelLayoutProps {
@@ -12,7 +12,7 @@ interface FunnelLayoutProps {
 export function FunnelLayout({ children, currentStep, totalSteps }: FunnelLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header />
+      <FunnelHeader />
       <div className="max-w-[680px] mx-auto w-full px-4 pt-4">
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       </div>

@@ -34,7 +34,7 @@ export const fr: TranslationKeys = {
     heroSubtitle: "Obtenez une estimation, réservez une inspection et recevez votre offre finale d'AUTO24.",
     ctaStart: "Commencer",
     ctaHow: "Comment ça marche",
-    countryQuestion: "Dans quel pays êtes-vous ?",
+    countryQuestion: "Sélectionnez votre pays",
     countryPlaceholder: "— Sélectionnez votre pays —",
     reassurance: {
       fast: "Rapide",

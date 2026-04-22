@@ -32,7 +32,7 @@ export const en = {
     heroSubtitle: "Get an estimated value, book an inspection, and receive your final offer from AUTO24.",
     ctaStart: "Start now",
     ctaHow: "How it works",
-    countryQuestion: "Which country are you in?",
+    countryQuestion: "Select your country",
     countryPlaceholder: "— Select your country —",
     reassurance: {
       fast: "Fast",

@@ -1,94 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import { Zap, CheckCircle, Shield } from "lucide-react";
 import { useLanguage } from "@/i18n/language-context";
 import { funnelStore } from "@/lib/funnel-store";
-import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
-const LANDING_COUNTRIES = [
+const FLAG_COUNTRIES = [
+  { value: "CI", flag: "🇨🇮", label: "Côte d'Ivoire" },
   { value: "MA", flag: "🇲🇦", label: "Maroc" },
   { value: "SN", flag: "🇸🇳", label: "Sénégal" },
-  { value: "CI", flag: "🇨🇮", label: "Côte d'Ivoire" },
-  { value: "ZA", flag: "🇿🇦", labelFr: "Afrique du Sud", labelEn: "South Africa" },
   { value: "RW", flag: "🇷🇼", label: "Rwanda" },
+  { value: "ZA", flag: "🇿🇦", label: "Afrique du Sud" },
 ] as const;
 
 export function LandingHero() {
-  const { t, locale, setLocaleFromCountry } = useLanguage();
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const { t, setLocaleFromCountry } = useLanguage();
+  const router = useRouter();
 
-  const handleCountryChange = (value: string) => {
-    setSelectedCountry(value);
-    setLocaleFromCountry(value);
-    funnelStore.setSelectedCountry(value);
-  };
-
-  const getCountryLabel = (c: typeof LANDING_COUNTRIES[number]) => {
-    if ("labelFr" in c) {
-      return locale === "fr" ? c.labelFr : c.labelEn;
-    }
-    return c.label;
+  const handleCountryClick = (code: string) => {
+    funnelStore.setSelectedCountry(code);
+    setLocaleFromCountry(code);
+    router.push("/sell");
   };
 
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
 
-      <div className="relative max-w-[680px] mx-auto px-4 pt-12 pb-8 text-center">
-        {/* Logo */}
-        <div className="flex justify-center mb-4" style={{ overflow: "visible", alignItems: "center" }}>
-          <Auto24Logo height={40} color="#185ADB" />
-        </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-neutral-dark leading-tight mb-4">
+      <div className="relative max-w-[680px] mx-auto px-4 pt-10 pb-8 text-center">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-dark leading-tight mb-3">
           {t.landing.heroTitle}
         </h1>
-        <p className="text-neutral-medium text-base mb-6 max-w-md mx-auto">
+        <p className="text-neutral-medium text-sm mb-8 max-w-md mx-auto">
           {t.landing.heroSubtitle}
         </p>
 
-        {/* Country selector */}
-        <div className="max-w-[320px] mx-auto mb-8">
-          <p className="text-sm font-medium text-neutral-dark mb-2">
-            {t.landing.countryQuestion}
-          </p>
-          <select
-            value={selectedCountry}
-            onChange={(e) => handleCountryChange(e.target.value)}
-            className="w-full h-12 rounded-xl border-2 border-gray-200 bg-white px-4 text-sm transition-colors appearance-none text-center focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          >
-            <option value="" disabled>
-              {t.landing.countryPlaceholder}
-            </option>
-            {LANDING_COUNTRIES.map((c) => (
-              <option key={c.value} value={c.value}>
-                {c.flag}  {getCountryLabel(c)}
-              </option>
-            ))}
-          </select>
+        {/* Flag country selector */}
+        <p style={{ fontSize: 14, color: "#6B7280", textAlign: "center", marginBottom: 16 }}>
+          {t.landing.countryQuestion}
+        </p>
+
+        <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 32 }}>
+          {FLAG_COUNTRIES.map((c) => (
+            <button
+              key={c.value}
+              type="button"
+              onClick={() => handleCountryClick(c.value)}
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "center" }}
+            >
+              <div
+                style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: "50%",
+                  border: "2px solid transparent",
+                  background: "#F9FAFB",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 36,
+                  transition: "all 0.2s",
+                  margin: "0 auto",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "#185ADB";
+                  e.currentTarget.style.background = "#EEF3FC";
+                  e.currentTarget.style.transform = "scale(1.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "transparent";
+                  e.currentTarget.style.background = "#F9FAFB";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                {c.flag}
+              </div>
+              <span style={{ fontSize: 10, color: "#6B7280", marginTop: 4, display: "block" }}>
+                {c.label}
+              </span>
+            </button>
+          ))}
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center mb-10">
-          {selectedCountry ? (
-            <Link href="/sell">
-              <Button size="lg" className="w-full sm:w-auto">
-                {t.landing.ctaStart}
-              </Button>
-            </Link>
-          ) : (
-            <Button size="lg" className="w-full sm:w-auto" disabled>
-              {t.landing.ctaStart}
-            </Button>
-          )}
-          <a href="#how-it-works">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              {t.landing.ctaHow}
-            </Button>
-          </a>
-        </div>
-
+        {/* Reassurance badges */}
         <div className="grid grid-cols-3 gap-4">
           <div className="flex flex-col items-center gap-2">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
