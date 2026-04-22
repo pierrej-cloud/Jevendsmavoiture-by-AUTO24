@@ -17,24 +17,30 @@ export function FunnelHeader() {
 
   return (
     <header
+      className="md:min-h-[160px]"
       style={{
+        background: "#185ADB",
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "#185ADB",
+        width: "100%",
+        height: "auto",
+        minHeight: 120,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "10px 16px",
-        width: "100%",
+        padding: 16,
       }}
     >
       <img
         src={`/branding/header-${country.toLowerCase()}.png`}
         alt=""
+        className="md:max-h-[140px]"
         style={{
-          height: 52,
+          maxHeight: 100,
+          maxWidth: "90%",
           width: "auto",
+          height: "auto",
           objectFit: "contain",
           display: "block",
         }}

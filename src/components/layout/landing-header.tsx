@@ -6,126 +6,125 @@ import { Auto24Logo } from "@/components/ui/Auto24Logo";
 
 export function LandingHeader() {
   const { locale, setLocale } = useLanguage();
-  const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setDropdownOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const brandText = locale === "fr" ? "vendezvotrevoiture" : "sellyourcar";
-  const byText = locale === "fr" ? "par AUTO24" : "by AUTO24";
-
   return (
     <header
       style={{
-        height: 56,
-        background: "#FFFFFF",
+        background: "white",
         borderBottom: "1px solid #E5E7EB",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 16px",
         position: "sticky",
         top: 0,
         zIndex: 50,
+        padding: "0 16px",
+        height: 56,
       }}
     >
-      {/* LEFT spacer */}
-      <div style={{ flex: 1 }} />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 12,
+          height: "100%",
+        }}
+      >
+        {/* Logo */}
+        <Auto24Logo height={26} color="#185ADB" />
 
-      {/* CENTER — logo */}
-      <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
-        <Auto24Logo height={28} color="#185ADB" />
-      </div>
-
-      {/* RIGHT — brand text + lang dropdown */}
-      <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 10 }}>
-        {/* Brand text */}
-        <div style={{ textAlign: "right", lineHeight: 1.2 }}>
-          <div style={{ color: "#185ADB", fontSize: 11, fontWeight: 600 }}>{brandText}</div>
-          <div style={{ color: "#9CA3AF", fontSize: 10 }}>{byText}</div>
+        {/* Text */}
+        <div style={{ lineHeight: 1.2 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>
+            {locale === "fr" ? "vendezvotrevoiture" : "sellyourcar"}
+          </div>
+          <div style={{ fontSize: 10, color: "#185ADB", fontWeight: 600 }}>
+            {locale === "fr" ? "par AUTO24" : "by AUTO24"}
+          </div>
         </div>
 
         {/* Language dropdown */}
         <div ref={ref} style={{ position: "relative" }}>
           <button
             type="button"
-            onClick={() => setOpen(!open)}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 4,
-              background: "white",
-              border: "1px solid #E5E7EB",
+              gap: 5,
+              padding: "5px 10px",
               borderRadius: 20,
-              padding: "4px 10px",
-              cursor: "pointer",
+              border: "1px solid #E5E7EB",
+              background: "white",
               fontSize: 13,
               fontWeight: 600,
               color: "#185ADB",
+              cursor: "pointer",
             }}
           >
-            🌐 {locale === "fr" ? "🇫🇷 FR" : "🇬🇧 EN"} ▾
+            🌐 {locale === "fr" ? "🇫🇷 FR" : "🇬🇧 EN"} ▼
           </button>
 
-          {open && (
+          {dropdownOpen && (
             <div
               style={{
                 position: "absolute",
-                top: "calc(100% + 4px)",
-                right: 0,
+                top: "calc(100% + 8px)",
+                left: "50%",
+                transform: "translateX(-50%)",
                 background: "white",
                 borderRadius: 12,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
-                padding: 8,
-                zIndex: 100,
+                boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+                padding: 6,
                 minWidth: 140,
+                zIndex: 100,
               }}
             >
               <button
                 type="button"
-                onClick={() => { setLocale("fr"); setOpen(false); }}
+                onClick={() => { setLocale("fr"); setDropdownOpen(false); }}
                 style={{
-                  display: "block",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
                   width: "100%",
-                  textAlign: "left",
                   padding: "8px 12px",
                   borderRadius: 8,
+                  background: locale === "fr" ? "#EEF3FC" : "transparent",
+                  color: locale === "fr" ? "#185ADB" : "#111827",
+                  fontWeight: locale === "fr" ? 600 : 400,
                   border: "none",
                   cursor: "pointer",
-                  fontSize: 13,
-                  background: locale === "fr" ? "#EEF3FC" : "transparent",
-                  color: locale === "fr" ? "#185ADB" : "#374151",
-                  fontWeight: locale === "fr" ? 600 : 400,
+                  fontSize: 14,
                 }}
-                onMouseEnter={(e) => { if (locale !== "fr") e.currentTarget.style.background = "#F3F4F6"; }}
-                onMouseLeave={(e) => { if (locale !== "fr") e.currentTarget.style.background = "transparent"; }}
               >
                 🇫🇷 Français
               </button>
               <button
                 type="button"
-                onClick={() => { setLocale("en"); setOpen(false); }}
+                onClick={() => { setLocale("en"); setDropdownOpen(false); }}
                 style={{
-                  display: "block",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
                   width: "100%",
-                  textAlign: "left",
                   padding: "8px 12px",
                   borderRadius: 8,
+                  background: locale === "en" ? "#EEF3FC" : "transparent",
+                  color: locale === "en" ? "#185ADB" : "#111827",
+                  fontWeight: locale === "en" ? 600 : 400,
                   border: "none",
                   cursor: "pointer",
-                  fontSize: 13,
-                  background: locale === "en" ? "#EEF3FC" : "transparent",
-                  color: locale === "en" ? "#185ADB" : "#374151",
-                  fontWeight: locale === "en" ? 600 : 400,
+                  fontSize: 14,
                 }}
-                onMouseEnter={(e) => { if (locale !== "en") e.currentTarget.style.background = "#F3F4F6"; }}
-                onMouseLeave={(e) => { if (locale !== "en") e.currentTarget.style.background = "transparent"; }}
               >
                 🇬🇧 English
               </button>
