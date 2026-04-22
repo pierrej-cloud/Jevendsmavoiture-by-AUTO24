@@ -3,7 +3,6 @@
 import { useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/i18n/language-context";
-import { cn } from "@/lib/utils";
 import { Auto24Logo } from "@/components/ui/Auto24Logo";
 import { funnelStore } from "@/lib/funnel-store";
 
@@ -15,48 +14,10 @@ const COUNTRY_TITLES: Record<string, string> = {
   ZA: "SellMyCarCash.co.za | by AUTO24",
 };
 
-const FALLBACK_DOMAIN = "jevendsmavoiturebyauto24.up.railway.app";
-const FALLBACK_TITLE = "Jevendsmavoiture by AUTO24";
-
-function LanguageSwitcher() {
-  const { locale, setLocale } = useLanguage();
-
-  return (
-    <div className="flex items-center gap-1">
-      <button
-        type="button"
-        onClick={() => setLocale("fr")}
-        className={cn(
-          "px-3 py-1 text-xs font-semibold transition-all",
-          locale === "fr" ? "bg-white" : "bg-transparent hover:bg-white/10"
-        )}
-        style={{
-          borderRadius: "20px",
-          color: locale === "fr" ? "#185ADB" : "rgba(255,255,255,0.6)",
-        }}
-      >
-        FR
-      </button>
-      <button
-        type="button"
-        onClick={() => setLocale("en")}
-        className={cn(
-          "px-3 py-1 text-xs font-semibold transition-all",
-          locale === "en" ? "bg-white" : "bg-transparent hover:bg-white/10"
-        )}
-        style={{
-          borderRadius: "20px",
-          color: locale === "en" ? "#185ADB" : "rgba(255,255,255,0.6)",
-        }}
-      >
-        EN
-      </button>
-    </div>
-  );
-}
+const VALID_COUNTRIES = ["CI", "MA", "SN", "RW", "ZA"];
 
 export function Header() {
-  const { locale } = useLanguage();
+  const { locale, setLocale } = useLanguage();
   const state = useSyncExternalStore(
     funnelStore.subscribe,
     funnelStore.getState,
@@ -64,58 +25,78 @@ export function Header() {
   );
 
   const country = state.selectedCountry;
-  const hasCountry = country && COUNTRY_TITLES[country];
-  const title = hasCountry ? COUNTRY_TITLES[country] : FALLBACK_TITLE;
-  const byLabel = locale === "fr" ? "par AUTO24" : "by AUTO24";
+  const hasCountry = country && VALID_COUNTRIES.includes(country);
+  const title = hasCountry ? COUNTRY_TITLES[country] : "Jevendsmavoiture by AUTO24";
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.title = title;
-    }
+    document.title = title;
   }, [title]);
 
-  // Country selected → full-width header PNG image
-  if (hasCountry) {
-    return (
-      <header className="sticky top-0 z-50" style={{ position: "relative", width: "100%" }}>
+  return (
+    <header
+      className="sticky top-0 z-50"
+      style={{
+        height: "56px",
+        background: "#FFFFFF",
+        borderBottom: "1px solid #E5E7EB",
+        padding: "0 16px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      {/* Left — Logo */}
+      <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center" }}>
         <Link href="/">
+          <Auto24Logo height={28} color="#185ADB" />
+        </Link>
+      </div>
+
+      {/* Center — Country header PNG or fallback text */}
+      <div style={{ flex: "1 1 auto", display: "flex", justifyContent: "center", alignItems: "center", minWidth: 0 }}>
+        {hasCountry ? (
           <img
             src={`/branding/header-${country.toLowerCase()}.png`}
-            alt="header"
-            style={{ width: "100%", height: "auto", display: "block" }}
+            alt={title}
+            style={{ height: "40px", width: "auto", objectFit: "contain", display: "block" }}
           />
-        </Link>
-        <div
+        ) : (
+          <span style={{ color: "#185ADB", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap" }}>
+            Jevendsmavoiture
+          </span>
+        )}
+      </div>
+
+      {/* Right — Language switcher */}
+      <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: "2px", fontSize: "13px" }}>
+        <button
+          type="button"
+          onClick={() => setLocale("fr")}
           style={{
-            position: "absolute",
-            top: 0,
-            right: 16,
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: "4px 6px",
+            fontWeight: locale === "fr" ? 700 : 400,
+            color: locale === "fr" ? "#185ADB" : "#9CA3AF",
           }}
         >
-          <LanguageSwitcher />
-        </div>
-      </header>
-    );
-  }
-
-  // Fallback → blue header with AUTO24 logo + text
-  return (
-    <header className="sticky top-0 z-50 h-[56px]" style={{ backgroundColor: "#185ADB" }}>
-      <div className="max-w-[680px] mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Auto24Logo height={24} color="#FFFFFF" />
-          <div className="flex flex-col leading-tight">
-            <span className="text-white font-bold text-[15px]">{FALLBACK_DOMAIN}</span>
-            <span className="text-white text-[11px]" style={{ opacity: 0.7 }}>
-              {byLabel}
-            </span>
-          </div>
-        </Link>
-        <LanguageSwitcher />
+          FR
+        </button>
+        <span style={{ color: "#D1D5DB" }}>|</span>
+        <button
+          type="button"
+          onClick={() => setLocale("en")}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: "4px 6px",
+            fontWeight: locale === "en" ? 700 : 400,
+            color: locale === "en" ? "#185ADB" : "#9CA3AF",
+          }}
+        >
+          EN
+        </button>
       </div>
     </header>
   );
