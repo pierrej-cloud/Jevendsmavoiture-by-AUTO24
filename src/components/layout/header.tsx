@@ -36,68 +36,66 @@ export function Header() {
     <header
       style={{
         background: "#185ADB",
-        height: 64,
+        padding: "10px 16px",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 16px",
+        justifyContent: "center",
+        gap: 16,
         position: "sticky",
         top: 0,
         zIndex: 50,
       }}
     >
-      {/* LEFT — logo white badge */}
+      {/* Logo white badge */}
       <Link href="/" style={{ flexShrink: 0 }}>
-        <div style={{ background: "white", borderRadius: 8, padding: "6px 10px", display: "flex", alignItems: "center" }}>
-          <Auto24Logo height={22} color="#185ADB" />
+        <div style={{ background: "white", borderRadius: 8, padding: "5px 10px", display: "flex", alignItems: "center" }}>
+          <Auto24Logo height={24} color="#185ADB" />
         </div>
       </Link>
 
-      {/* CENTER — country PNG or fallback text */}
-      <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
-        {hasCountry ? (
-          <img
-            src={`/branding/header-${country.toLowerCase()}.png`}
-            alt={title}
-            style={{ height: 44, width: "auto", objectFit: "contain", display: "block" }}
-          />
-        ) : (
-          <span style={{ color: "white", fontWeight: 700, fontSize: 15, whiteSpace: "nowrap" }}>
-            Jevendsmavoiture
-          </span>
-        )}
-      </div>
+      {/* Country PNG or fallback text */}
+      {hasCountry ? (
+        <img
+          src={`/branding/header-${country.toLowerCase()}.png`}
+          alt={title}
+          style={{ height: 48, width: "auto", objectFit: "contain", display: "block", flexShrink: 0 }}
+        />
+      ) : (
+        <span style={{ color: "white", fontWeight: 700, fontSize: 15, whiteSpace: "nowrap", flexShrink: 0 }}>
+          Jevendsmavoiture
+        </span>
+      )}
 
-      {/* RIGHT — language switcher */}
+      {/* FR | EN */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
         <button
           type="button"
           onClick={() => setLocale("fr")}
           style={{
             color: "white",
-            fontWeight: locale === "fr" ? 700 : 400,
-            opacity: locale === "fr" ? 1 : 0.5,
+            fontWeight: 700,
             background: "none",
             border: "none",
             cursor: "pointer",
-            fontSize: 13,
+            fontSize: 14,
+            opacity: locale === "fr" ? 1 : 0.5,
             padding: "4px 2px",
           }}
         >
           FR
         </button>
-        <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
+        <span style={{ color: "rgba(255,255,255,0.4)" }}>|</span>
         <button
           type="button"
           onClick={() => setLocale("en")}
           style={{
             color: "white",
-            fontWeight: locale === "en" ? 700 : 400,
-            opacity: locale === "en" ? 1 : 0.5,
+            fontWeight: 700,
             background: "none",
             border: "none",
             cursor: "pointer",
-            fontSize: 13,
+            fontSize: 14,
+            opacity: locale === "en" ? 1 : 0.5,
             padding: "4px 2px",
           }}
         >
