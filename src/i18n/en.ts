@@ -44,7 +44,7 @@ export const en = {
     },
     howItWorks: {
       title: "How it works",
-      step1: "Tell us about your car",
+      step1: "Describe your vehicle",
       step1Desc: "Provide your vehicle details and condition",
       step2: "Upload photos",
       step2Desc: "Add photos of your vehicle for a better estimate",
@@ -52,6 +52,8 @@ export const en = {
       step3Desc: "Receive an indicative price range instantly",
       step4: "Book your inspection",
       step4Desc: "Choose a showroom and schedule your visit",
+      step5: "Instant cash payment",
+      step5Desc: "Get paid immediately after inspection",
     },
     whySell: {
       title: "Why sell with AUTO24",

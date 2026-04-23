@@ -25,33 +25,35 @@ export function LandingHeader() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        padding: "0 16px",
         height: 56,
       }}
     >
+      {/* Centered wrapper aligned with hero content */}
       <div
         style={{
+          maxWidth: 680,
+          margin: "0 auto",
+          padding: "0 16px",
+          height: "100%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          gap: 12,
-          height: "100%",
+          justifyContent: "space-between",
         }}
       >
-        {/* Logo */}
-        <Auto24Logo height={26} color="#185ADB" />
-
-        {/* Text */}
-        <div style={{ lineHeight: 1.2 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>
-            {locale === "fr" ? "vendezvotrevoiture" : "sellyourcar"}
-          </div>
-          <div style={{ fontSize: 10, color: "#185ADB", fontWeight: 600 }}>
-            {locale === "fr" ? "par AUTO24" : "by AUTO24"}
+        {/* LEFT group: Logo + branding text */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Auto24Logo height={26} color="#185ADB" />
+          <div style={{ lineHeight: 1.2 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#111827" }}>
+              {locale === "fr" ? "vendezvotrevoiture" : "sellyourcar"}
+            </div>
+            <div style={{ fontSize: 10, color: "#185ADB", fontWeight: 600 }}>
+              {locale === "fr" ? "par AUTO24" : "by AUTO24"}
+            </div>
           </div>
         </div>
 
-        {/* Language dropdown */}
+        {/* RIGHT: Language dropdown */}
         <div ref={ref} style={{ position: "relative" }}>
           <button
             type="button"
@@ -60,7 +62,7 @@ export function LandingHeader() {
               display: "flex",
               alignItems: "center",
               gap: 5,
-              padding: "5px 10px",
+              padding: "5px 12px",
               borderRadius: 20,
               border: "1px solid #E5E7EB",
               background: "white",
@@ -70,16 +72,15 @@ export function LandingHeader() {
               cursor: "pointer",
             }}
           >
-            🌐 {locale === "fr" ? "🇫🇷 FR" : "🇬🇧 EN"} ▼
+            {locale === "fr" ? "🇫🇷 FR" : "🇬🇧 EN"} ▾
           </button>
 
           {dropdownOpen && (
             <div
               style={{
                 position: "absolute",
-                top: "calc(100% + 8px)",
-                left: "50%",
-                transform: "translateX(-50%)",
+                top: "calc(100% + 6px)",
+                right: 0,
                 background: "white",
                 borderRadius: 12,
                 boxShadow: "0 4px 16px rgba(0,0,0,0.12)",

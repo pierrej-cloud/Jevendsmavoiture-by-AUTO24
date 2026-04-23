@@ -54,6 +54,8 @@ export const fr: TranslationKeys = {
       step3Desc: "Obtenez une fourchette de prix indicative instantanément",
       step4: "Réservez votre inspection",
       step4Desc: "Choisissez un showroom et planifiez votre visite",
+      step5: "Paiement cash immédiat",
+      step5Desc: "Recevez votre paiement immédiatement après l'inspection",
     },
     whySell: {
       title: "Pourquoi vendre avec AUTO24",
